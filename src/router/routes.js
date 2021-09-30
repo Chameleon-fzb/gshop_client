@@ -1,0 +1,37 @@
+import Home from '@/pages/Home'
+import Login from '@/pages/Login'
+import Register from '@/pages/Register'
+import Search from '@/pages/Search'
+
+export default [
+	{
+		// name: 'home',
+		path: '/',
+		components: {
+			home: Home
+		}
+	},
+	{
+		name: 'search',
+		path: '/search/:keyword?',
+		component: Search,
+		// props: true//只映射params参数
+		props(route) {
+			return { keyword: route.params.keyword }
+		}
+	},
+	{
+		path: '/login',
+		component: Login,
+		meta: {
+			isHideFooter: true
+		}
+	},
+	{
+		path: '/register',
+		component: Register,
+		meta: {
+			isHideFooter: true
+		}
+	}
+]
