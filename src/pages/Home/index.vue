@@ -1,11 +1,11 @@
 <template>
 	<div>
-		<h2>home</h2>
 		<TypeNav />
 		<Listcontainer />
 		<TodyRecommend />
-		<Like />
 		<Rank />
+		<Like />
+		<Floor />
 		<Floor />
 		<Brand />
 	</div>
@@ -29,9 +29,3 @@ export default {
 	}
 }
 </script>
-<style>
-h2 {
-	color: cadetblue;
-	font-size: 100px;
-}
-</style>

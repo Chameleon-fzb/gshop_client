@@ -1,6 +1,5 @@
 <template>
 	<div>
-		<h3>TypeNav</h3>
 		<div class="type-nav">
 			<div class="container">
 				<h2 class="all">全部商品分类</h2>
