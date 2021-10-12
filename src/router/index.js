@@ -7,7 +7,7 @@ Vue.use(VueRouter)
  * 编程式导航 没有传 如果重复导航 会返回一个失败的promise
  */
 
-/* // ! 缓存原本的push方法
+/* // ? 缓存原本的push方法
 const originalPush = VueRouter.prototype.push
 const originalReplace = VueRouter.prototype.replace
 // ! 指定新的push方法
@@ -40,18 +40,18 @@ VueRouter.prototype.replace = function(location, onResolve, onReject) {
 }
  */
 const originalPush = VueRouter.prototype.push
-const originalReplace = VueRouter.prototype.Replace
+const originalReplace = VueRouter.prototype.replace
 VueRouter.prototype.push = function(location, onResolve, onReject) {
-	// ! 判断onResolve 和 onReject 有没有指定 指定了就直接调用 vue-router 的 push 方法
+	// ? 判断onResolve 和 onReject 有没有指定 指定了就直接调用 vue-router 的 push 方法
 	if (onResolve || onReject)
 		return originalPush.call(this, location, onResolve, onReject)
-	// ! 没有指定 就用 catch 捕获错误
+	// ? 没有指定 就用 catch 捕获错误
 	return originalPush.call(this, location).catch(err => {
-		// ! 判断是否为 路由重复导航的错误 如果是 返回一个成功的 promise value 为 err
+		// ? 判断是否为 路由重复导航的错误 如果是 返回一个成功的 promise value 为 err
 		if (VueRouter.isNavigationFailure(err)) {
 			return err
 		}
-		// ! 不是这个错误 则 返回一个失败的 Promise
+		// ? 不是这个错误 则 返回一个失败的 Promise
 		return Promise.reject(err)
 	})
 }

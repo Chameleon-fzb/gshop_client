@@ -8,7 +8,7 @@ import ajax from './ajax'
 /* 
 ?首页三级菜单
  */
-export function getCategoryList() {
+export function reqCategoryList() {
 	return ajax({
 		url: '/product/getBaseCategoryList'
 	})

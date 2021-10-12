@@ -17,7 +17,7 @@ import 'nprogress/nprogress.css'
 // ? service 是一个能嘎任意ajax请求的函数,当然可以作为对象使用
 
 const service = axios.create({
-	baseURL: 'http://api.atguigu.cn/api',
+	baseURL: '/api',
 	timeout: 20000 //超时时间
 })
 
