@@ -23,7 +23,7 @@ const actions = {
 const mutations = {
 	// ? 1 接收 保存 三级 列表数据
 	RECEIVE_CATEGORY_LIST(state, cateGoryList) {
-		state.categoryList = cateGoryList
+		state.categoryList = cateGoryList.splice(0, 15)
 	}
 }
 

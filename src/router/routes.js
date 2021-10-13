@@ -7,9 +7,7 @@ export default [
 	{
 		// name: 'home',
 		path: '/',
-		components: {
-			home: Home
-		}
+		component: Home
 	},
 	{
 		name: 'search',

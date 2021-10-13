@@ -65,7 +65,8 @@ export default {
 			//?编程式路由导航
 			const { keyword } = this
 			const location = {
-				name: 'search'
+				name: 'search',
+				query: this.$route.query
 			}
 			//?只有有数据时才携带params参数
 			if (keyword) {

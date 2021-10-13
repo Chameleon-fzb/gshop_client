@@ -2,7 +2,65 @@
 	<div>
 		<div class="type-nav">
 			<div class="container">
-				<h2 class="all">全部商品分类</h2>
+				<div @mouseleave="hideFirst" @mouseenter="showFirst">
+					<h2 class="all">全部商品分类</h2>
+					<transition name="slide">
+						<div class="sort" v-show="isShowFirst">
+							<div class="all-sort-list2" @click="toSearch">
+								<div
+									class="item"
+									v-for="(c1, index) in categoryList"
+									:key="c1.categoryId"
+									:class="{ active: currentIndex === index }"
+									@mouseenter="showSubList(index)"
+								>
+									<h3>
+										<a
+											href="javascript:;"
+											:data-categoryName="c1.categoryName"
+											:data-category1Id="c1.categoryId"
+										>
+											{{ c1.categoryName }}
+										</a>
+									</h3>
+									<div class="item-list clearfix">
+										<div class="subitem">
+											<dl
+												class="fore"
+												v-for="c2 in c1.categoryChild"
+												:key="c2.categoryId"
+											>
+												<dt>
+													<a
+														href="javascript:;"
+														:data-categoryName="c2.categoryName"
+														:data-category2Id="c2.categoryId"
+													>
+														{{ c2.categoryName }}
+													</a>
+												</dt>
+												<dd>
+													<em
+														v-for="c3 in c2.categoryChild"
+														:key="c3.categoryId"
+													>
+														<a
+															href="javascript:;"
+															:data-categoryName="c3.categoryName"
+															:data-category3Id="c3.categoryId"
+														>
+															{{ c3.categoryName }}
+														</a>
+													</em>
+												</dd>
+											</dl>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</transition>
+				</div>
 				<nav class="nav">
 					<a href="###">服装城</a>
 					<a href="###">美妆馆</a>
@@ -13,68 +71,36 @@
 					<a href="###">有趣</a>
 					<a href="###">秒杀</a>
 				</nav>
-				<div class="sort">
-					<div class="all-sort-list2" @click="toSearch">
-						<div class="item" v-for="c1 in categoryList" :key="c1.categoryId">
-							<h3>
-								<a
-									href="javascript:;"
-									:data-categoryName="c1.categoryName"
-									:data-category1Id="c1.categoryId"
-								>
-									{{ c1.categoryName }}
-								</a>
-							</h3>
-							<div class="item-list clearfix">
-								<div class="subitem">
-									<dl
-										class="fore"
-										v-for="c2 in c1.categoryChild"
-										:key="c2.categoryId"
-									>
-										<dt>
-											<a
-												href="javascript:;"
-												:data-categoryName="c2.categoryName"
-												:data-category2Id="c2.categoryId"
-											>
-												{{ c2.categoryName }}
-											</a>
-										</dt>
-										<dd>
-											<em v-for="c3 in c2.categoryChild" :key="c3.categoryId">
-												<a
-													href="javascript:;"
-													:data-categoryName="c3.categoryName"
-													:data-category3Id="c3.categoryId"
-												>
-													{{ c3.categoryName }}
-												</a>
-											</em>
-										</dd>
-									</dl>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
 			</div>
 		</div>
 	</div>
 </template>
 <script>
 import { mapState } from 'vuex'
+import throttle from 'lodash/throttle'
 export default {
 	name: 'TypeNav',
+	data() {
+		const { path } = this.$route
+		const isHome = path === '/'
+		return {
+			currentIndex: -2,
+			isHome,
+			isShowFirst: isHome
+		}
+	},
 	computed: {
-		// categoryList() {
-		// 	return this.$store.state.home.categoryList
-		// },
 		...mapState({
 			categoryList: state => state.home.categoryList //函数接收的是总状态 返回值作为计算属性值
 		})
+		// isShowFirst() {
+		// 	return this.$route.path === '/'
+		// }
 	},
 	methods: {
+		/**
+		 * * 点击导航列表进入 搜索页
+		 */
 		toSearch(event) {
 			const {
 				//取出data自定义属性的值
@@ -95,12 +121,38 @@ export default {
 				if (category3id) {
 					query.category3id = category3id
 				}
-				// 跳转到search页面
-				this.$router.push({
+				const location = {
 					name: 'search',
 					query
-				})
+					// parmas: this.$route.params
+				}
+
+				// 跳转到search页面
+				this.$router.push(location)
 			}
+		},
+		/**
+		 * * 显示子列表 节流
+		 */
+		showSubList: throttle(function(index) {
+			if (this.currentIndex !== -2) {
+				this.currentIndex = index
+			}
+		}, 200),
+		/**
+		 * * 显示一级列表
+		 */
+
+		showFirst() {
+			this.currentIndex = -1
+			if (!this.isHome) this.isShowFirst = true
+		},
+		/**
+		 * * 非home 页面 隐藏一级列表
+		 */
+		hideFirst() {
+			this.currentIndex = -2
+			if (!this.isHome) this.isShowFirst = false
 		}
 	}
 }
@@ -145,7 +197,21 @@ export default {
 			position: absolute;
 			background: #fafafa;
 			z-index: 999;
-
+			/**
+			 * *指定 过渡 的样式
+			 */
+			&.slide-enter-active,
+			&.slide-leave-active {
+				transition: all 0.3s;
+			}
+			/**
+			 * *指定 隐藏 的样式
+			 */
+			&.slide-enter,
+			&.slide-leave-to {
+				opacity: 0;
+				height: 0;
+			}
 			.all-sort-list2 {
 				.item {
 					h3 {
@@ -215,7 +281,8 @@ export default {
 						}
 					}
 
-					&:hover {
+					&.active {
+						background-color: #ddd;
 						.item-list {
 							display: block;
 						}

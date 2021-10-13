@@ -1,10 +1,10 @@
 <template>
 	<div>
+		<type-nav />
 		<h2>search</h2>
 		<h2>{{ keyword }}</h2>
 	</div>
 </template>
-route
 
 <script>
 export default {

@@ -2,7 +2,7 @@
 	<div>
 		<Header />
 		<!-- 所有的一级路由都在此显示 -->
-		<router-view name="home"></router-view>
+		<router-view></router-view>
 		<Footer v-if="!$route.meta.isHideFooter" />
 	</div>
 </template>
