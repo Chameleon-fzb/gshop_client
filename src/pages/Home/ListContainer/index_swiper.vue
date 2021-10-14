@@ -3,19 +3,23 @@
 		<div class="sortList clearfix">
 			<div class="center">
 				<!--banner轮播-->
-				<!-- 使用 vue-awesome-swiper 组件 -->
-				<swiper ref="mySwiper" :options="swiperOptions">
-					<swiper-slide
-						class="swiper-slide"
-						v-for="banner in bannerList"
-						:key="banner.id"
-					>
-						<img :src="banner.imageUrl" />
-					</swiper-slide>
-					<div class="swiper-pagination" slot="pagination"></div>
-					<div class="swiper-button-prev" slot="button-prev"></div>
-					<div class="swiper-button-next" slot="button-next"></div>
-				</swiper>
+				<div class="swiper-container" ref="mySwiper">
+					<div class="swiper-wrapper">
+						<div
+							class="swiper-slide"
+							v-for="banner in bannerList"
+							:key="banner.id"
+						>
+							<img :src="banner.imageUrl" />
+						</div>
+					</div>
+					<!-- 如果需要分页器 -->
+					<div class="swiper-pagination"></div>
+
+					<!-- 如果需要导航按钮 -->
+					<div class="swiper-button-prev"></div>
+					<div class="swiper-button-next"></div>
+				</div>
 			</div>
 			<div class="right">
 				<div class="news">
@@ -105,41 +109,57 @@
 	</div>
 </template>
 <script>
+import Swiper from 'swiper'
+import 'swiper/css/swiper.css'
 import { mapState } from 'vuex'
 export default {
 	name: 'ListCommtainer',
-	data() {
-		return {
-			swiperOptions: {
-				// direction: 'vertical', // 垂直切换选项
-				loop: true, // 循环模式选项
-				autoplay: {
-					//自动轮播
-					delay: 4000,
-					disableOnInteraction: false //用户操作后
-				},
-				// 如果需要分页器
-				pagination: {
-					el: '.swiper-pagination'
-				},
-
-				// 如果需要前进后退按钮
-				navigation: {
-					nextEl: '.swiper-button-next',
-					prevEl: '.swiper-button-prev'
-				}
-
-				// 如果需要滚动条
-				// scrollbar: {
-				// 	el: '.swiper-scrollbar'
-				// }
-			}
-		}
-	},
 	computed: {
 		...mapState({
 			bannerList: state => state.home.bannerList
 		})
+	},
+
+	watch: {
+		/**
+		 * * 在列表数据已经有了,  且已经更新显示了?
+		 * * 数据变化后 ==> 同步调佣监视的回调 ==> 最后异步更新界面
+		 * * watch : 监视 bannerList, 就可以知道 有数据了
+		 * * nextTick: 界面更新后执行回调
+		 */
+		bannerList() {
+			/**
+			 * * 将 回调延迟到下次 DOM 更新循环之后执行 在修改数据之后立即 使用 它
+			 * * 然后等待 DOM 更新
+			 */
+			this.$nextTick(() => {
+				//*在此次数据变化导致界面更新完成后执行
+				new Swiper(this.$refs.mySwiper, {
+					// direction: 'vertical', // 垂直切换选项
+					loop: true, // 循环模式选项
+					autoplay: {
+						//自动轮播
+						delay: 4000,
+						disableOnInteraction: false //用户操作后
+					},
+					// 如果需要分页器
+					pagination: {
+						el: '.swiper-pagination'
+					},
+
+					// 如果需要前进后退按钮
+					navigation: {
+						nextEl: '.swiper-button-next',
+						prevEl: '.swiper-button-prev'
+					}
+
+					// 如果需要滚动条
+					// scrollbar: {
+					// 	el: '.swiper-scrollbar'
+					// }
+				})
+			})
+		}
 	}
 }
 </script>
