@@ -197,16 +197,12 @@ export default {
 			position: absolute;
 			background: #fafafa;
 			z-index: 999;
-			/**
-			 * *指定 过渡 的样式
-			 */
+			//*指定 过渡 的样式
 			&.slide-enter-active,
 			&.slide-leave-active {
 				transition: all 0.3s;
 			}
-			/**
-			 * *指定 隐藏 的样式
-			 */
+			//*指定 隐藏 的样式
 			&.slide-enter,
 			&.slide-leave-to {
 				opacity: 0;

@@ -5,11 +5,11 @@
 */
 import ajax from './ajax'
 
-/* 
-?首页三级菜单
+/**
+ *? 首页三级菜单 GET
  */
-export function reqCategoryList() {
-	return ajax({
-		url: '/product/getBaseCategoryList'
-	})
-}
+export const reqCategoryList = () => ajax('/product/getBaseCategoryList')
+/**
+ *? 首页轮播图  GET
+ */
+export const reqBannerList = () => ajax('/cms/banner')

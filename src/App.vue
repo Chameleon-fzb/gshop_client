@@ -15,6 +15,7 @@ export default {
 	name: 'App',
 	mounted() {
 		this.$store.dispatch('getCategoryList')
+		this.$store.dispatch('getBannerList')
 	},
 	components: {
 		Header,
