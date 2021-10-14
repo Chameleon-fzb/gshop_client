@@ -3,20 +3,15 @@
 		<div class="sortList clearfix">
 			<div class="center">
 				<!--banner轮播-->
-				<div class="swiper-container" id="mySwiper">
+				<div class="swiper-container" ref="mySwiper">
 					<div class="swiper-wrapper">
-						<div class="swiper-slide">
-							<img src="./images/banner1.jpg" />
+						<div
+							class="swiper-slide"
+							v-for="banner in bannerList"
+							:key="banner.id"
+						>
+							<img :src="banner.imageUrl" />
 						</div>
-						<!-- <div class="swiper-slide">
-							<img src="./images/banner2.jpg" />
-						</div>
-						<div class="swiper-slide">
-							<img src="./images/banner3.jpg" />
-						</div>
-						<div class="swiper-slide">
-							<img src="./images/banner4.jpg" />
-						</div> -->
 					</div>
 					<!-- 如果需要分页器 -->
 					<div class="swiper-pagination"></div>
@@ -114,8 +109,58 @@
 	</div>
 </template>
 <script>
+import Swiper from 'swiper'
+import 'swiper/css/swiper.css'
+import { mapState } from 'vuex'
 export default {
-	name: 'ListCommtainer'
+	name: 'ListCommtainer',
+	computed: {
+		...mapState({
+			bannerList: state => state.home.bannerList
+		})
+	},
+	mounted() {},
+	watch: {
+		/**
+		 * * 在列表数据已经有了,  且已经更新显示了?
+		 * * 数据变化后 ==> 同步调佣监视的回调 ==> 最后异步更新界面
+		 * * watch : 监视 bannerList, 就可以知道 有数据了
+		 * * nextTick: 界面更新后执行回调
+		 */
+		bannerList() {
+			/**
+			 * * 将 回调延迟到下次 DOM 更新循环之后执行 在修改数据之后立即 使用 它
+			 * * 然后等待 DOM 更新
+			 */
+			this.$nextTick(() => {
+				//*在此次数据变化导致界面更新完成后执行
+				new Swiper(this.$refs.mySwiper, {
+					// direction: 'vertical', // 垂直切换选项
+					loop: true, // 循环模式选项
+					autoplay: {
+						//自动轮播
+						delay: 4000,
+						disableOnInteraction: false //用户操作后
+					},
+					// 如果需要分页器
+					pagination: {
+						el: '.swiper-pagination'
+					},
+
+					// 如果需要前进后退按钮
+					navigation: {
+						nextEl: '.swiper-button-next',
+						prevEl: '.swiper-button-prev'
+					}
+
+					// 如果需要滚动条
+					// scrollbar: {
+					// 	el: '.swiper-scrollbar'
+					// }
+				})
+			})
+		}
+	}
 }
 </script>
 <style lang="less" scoped>
