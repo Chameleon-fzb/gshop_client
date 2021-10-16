@@ -4,7 +4,7 @@
 			<div class="center">
 				<!--banner轮播-->
 				<!-- 使用 vue-awesome-swiper 组件 -->
-				<swiper ref="mySwiper" :options="swiperOptions">
+				<swiper :options="swiperOptions">
 					<swiper-slide
 						class="swiper-slide"
 						v-for="banner in bannerList"

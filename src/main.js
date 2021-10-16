@@ -5,6 +5,8 @@ import TypeNav from './components/TypeNav'
 import store from './store'
 
 import './plugins/swiper'
+import './mock/mockServer'
+
 Vue.config.productionTip = false
 
 // ? 注册全局组件

@@ -5,8 +5,7 @@
 		<TodyRecommend />
 		<Rank />
 		<Like />
-		<Floor />
-		<Floor />
+		<Floor v-for="floor in floors" :key="floor.id" :floor="floor" />
 		<Brand />
 	</div>
 </template>
@@ -17,8 +16,18 @@ import Like from './Like'
 import Rank from './Rank'
 import Floor from './Floor'
 import Brand from './Brand'
+import { mapState } from 'vuex'
 export default {
 	name: 'Home',
+	mounted() {
+		this.$store.dispatch('getRecommends')
+		this.$store.dispatch('getFloors')
+	},
+	computed: {
+		...mapState({
+			floors: state => state.home.floors
+		})
+	},
 	components: {
 		Listcontainer,
 		TodyRecommend,

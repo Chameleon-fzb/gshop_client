@@ -1,11 +1,13 @@
 /* 
 管理首页的数据的 vuex 子模块
 */
-import { reqCategoryList, reqBannerList } from '@/api'
+import { reqCategoryList, reqBannerList, reqRecommends, reqFloors } from '@/api'
 
 const state = {
 	categoryList: [],
-	bannerList: []
+	bannerList: [],
+	recommends: [],
+	floors: []
 }
 
 const actions = {
@@ -24,6 +26,21 @@ const actions = {
 			const bannerList = result.data
 			commit('RECEIVE_BANNER_LIST', bannerList)
 		}
+	},
+	// ? 3 异步获取今日推荐的 数据
+	async getRecommends({ commit }) {
+		const result = await reqRecommends()
+		if (result.code === 200) {
+			const recommends = result.data
+			commit('RECEIVE_RECOMMENDS', recommends)
+		}
+	},
+	async getFloors({ commit }) {
+		const result = await reqFloors()
+		if (result.code === 200) {
+			const floors = result.data
+			commit('RECEIVE_FLOORS', floors)
+		}
 	}
 }
 
@@ -35,6 +52,14 @@ const mutations = {
 	// ? 2 接收 保存 轮播图 数据
 	RECEIVE_BANNER_LIST(state, bannerList) {
 		state.bannerList = bannerList
+	},
+	// ? 3 接收 今日推荐 数据
+	RECEIVE_RECOMMENDS(state, recommends) {
+		state.recommends = recommends
+	},
+	// ? 4 接收 今日推荐 数据
+	RECEIVE_FLOORS(state, floors) {
+		state.floors = floors
 	}
 }
 

@@ -4,12 +4,20 @@
 函数返回的是 promise 对象
 */
 import ajax from './ajax'
-
+import mockAjax from './mockAjax'
 /**
- *? 首页三级菜单 GET
- */
+ * ? 首页三级菜单 GET
+ **/
 export const reqCategoryList = () => ajax('/product/getBaseCategoryList')
 /**
- *? 首页轮播图  GET
- */
+ * ? 首页轮播图  GET
+ **/
 export const reqBannerList = () => ajax('/cms/banner')
+/**
+ * ? todyRecommend 今日推荐 GET
+ **/
+export const reqRecommends = () => mockAjax('/recommends')
+/**
+ * ? floor GET
+ **/
+export const reqFloors = () => mockAjax('/floors')
