@@ -2,7 +2,7 @@ import axios from 'axios'
 import nProgress from 'nprogress'
 const mockAjax = axios.create({
 	baseURL: '/mock',
-	timeout: 10000
+	timeout: 20000
 })
 
 mockAjax.interceptors.request.use(config => {

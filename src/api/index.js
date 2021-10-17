@@ -21,3 +21,15 @@ export const reqRecommends = () => mockAjax('/recommends')
  * ? floor GET
  **/
 export const reqFloors = () => mockAjax('/floors')
+/**
+ *  ?ranks GET
+ */
+export const reqRanks = () => mockAjax('/ranks')
+/**
+ * ? Like GET
+ */
+export const reqLikes = () => mockAjax('/likes')
+;(async () => {
+	const result = await reqLikes()
+	console.log(result)
+})()
