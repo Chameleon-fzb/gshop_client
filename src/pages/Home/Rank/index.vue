@@ -18,7 +18,7 @@
 		</div>
 		<div class="content">
 			<ul>
-				<li>
+				<li v-if="ranks[isFlag]">
 					<div
 						class="img-item"
 						v-for="item in ranks[isFlag].rankList"

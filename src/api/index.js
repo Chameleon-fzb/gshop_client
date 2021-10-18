@@ -29,7 +29,12 @@ export const reqRanks = () => mockAjax('/ranks')
  * ? Like GET
  */
 export const reqLikes = () => mockAjax('/likes')
-;(async () => {
-	const result = await reqLikes()
-	console.log(result)
-})()
+
+export const reqProductList = searchParams => ajax.post('/list', searchParams)
+// ;(async () => {
+// 	const result = await reqProductList({
+// 		pageNo: 1,
+// 		pageSize: 10
+// 	})
+// 	console.log(result)
+// })()
