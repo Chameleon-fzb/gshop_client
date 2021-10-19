@@ -235,7 +235,7 @@ export default {
 	},
 	created() {
 		this.updateParams()
-		this.$store.dispatch('getSearchResults', this.searchParams)
+		this.getShopList()
 	},
 	methods: {
 		updateParams() {
@@ -254,10 +254,19 @@ export default {
 				category3Id,
 				categoryName
 			}
+		},
+		getShopList() {
+			this.$store.dispatch('getSearchResults', this.searchParams)
 		}
 	},
 	computed: {
 		...mapGetters(['goodsList'])
+	},
+	watch: {
+		$route() {
+			this.updateParams()
+			this.getShopList()
+		}
 	}
 }
 </script>
