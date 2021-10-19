@@ -111,15 +111,15 @@ export default {
 			} = event.target.dataset
 
 			if (categoryname) {
-				const query = { categoryname }
+				const query = { categoryName: categoryname }
 				if (category1id) {
-					query.category1id = category1id
+					query.category1Id = category1id
 				}
 				if (category2id) {
-					query.category2id = category2id
+					query.category2Id = category2id
 				}
 				if (category3id) {
-					query.category3id = category3id
+					query.category3Id = category3id
 				}
 				const location = {
 					name: 'search',

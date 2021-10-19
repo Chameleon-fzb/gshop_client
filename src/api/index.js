@@ -30,9 +30,13 @@ export const reqRanks = () => mockAjax('/ranks')
  */
 export const reqLikes = () => mockAjax('/likes')
 
-export const reqProductList = searchParams => ajax.post('/list', searchParams)
+/**
+ * ? Search 页面
+ */
+
+export const reqSearch = searchParams => ajax.post('/list', searchParams)
 // ;(async () => {
-// 	const result = await reqProductList({
+// 	const result = await reqSearch({
 // 		pageNo: 1,
 // 		pageSize: 10
 // 	})
