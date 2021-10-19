@@ -84,7 +84,7 @@ export default {
 		const { path } = this.$route
 		const isHome = path === '/'
 		return {
-			currentIndex: -2,
+			currentIndex: -2, //?三种状态 -2 在 div 外 | -1 在 div内 但不再一级列表中 | >=0 当前所在 一级目录
 			isHome,
 			isShowFirst: isHome
 		}
@@ -93,9 +93,6 @@ export default {
 		...mapState({
 			categoryList: state => state.home.categoryList //函数接收的是总状态 返回值作为计算属性值
 		})
-		// isShowFirst() {
-		// 	return this.$route.path === '/'
-		// }
 	},
 	methods: {
 		/**
@@ -123,10 +120,10 @@ export default {
 				}
 				const location = {
 					name: 'search',
-					query
-					// parmas: this.$route.params
+					query,
+					params: { keyword: this.$route.params.keyword }
 				}
-
+				console.log(location)
 				// 跳转到search页面
 				this.$router.push(location)
 			}
