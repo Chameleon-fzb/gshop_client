@@ -11,10 +11,13 @@
 						</li>
 					</ul>
 					<ul class="fl sui-tag">
-						<li class="with-x">手机</li>
-						<li class="with-x">
-							iphone
-							<i>×</i>
+						<li class="with-x" v-if="searchParams.keyword">
+							{{ searchParams.keyword }}
+							<i @click="removeKeyword">×</i>
+						</li>
+						<li class="with-x" v-if="searchParams.categoryName">
+							{{ searchParams.categoryName }}
+							<i @click="removeCategory">×</i>
 						</li>
 					</ul>
 				</div>
@@ -238,6 +241,7 @@ export default {
 		this.getShopList()
 	},
 	methods: {
+		// 更新请求参数
 		updateParams() {
 			const { keyword } = this.$route.params
 			const {
@@ -255,8 +259,22 @@ export default {
 				categoryName
 			}
 		},
+		// 获取数据
 		getShopList() {
 			this.$store.dispatch('getSearchResults', this.searchParams)
+		},
+		// 移除列表搜索项
+		removeCategory() {
+			this.searchParams.category1Id = ''
+			this.searchParams.category2Id = ''
+			this.searchParams.category3Id = ''
+			this.searchParams.categoryName = ''
+			this.getShopList()
+		},
+		// 移除关键字
+		removeKeyword() {
+			this.searchParams.keyword = ''
+			this.getShopList()
 		}
 	},
 	computed: {
@@ -326,6 +344,7 @@ export default {
 						font: 400 14px tahoma;
 						display: inline-block;
 						height: 100%;
+						line-height: 100%;
 						vertical-align: middle;
 					}
 					&:hover {
