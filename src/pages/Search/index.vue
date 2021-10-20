@@ -269,12 +269,22 @@ export default {
 			this.searchParams.category2Id = ''
 			this.searchParams.category3Id = ''
 			this.searchParams.categoryName = ''
-			this.getShopList()
+			const location = {
+				name: 'search',
+				params: { keyword: this.$route.params.keyword }
+			}
+			//重新跳转路由
+			this.$router.push(location)
 		},
 		// 移除关键字
 		removeKeyword() {
 			this.searchParams.keyword = ''
-			this.getShopList()
+			const location = {
+				name: 'search',
+				query: this.$route.query
+			}
+			// 重新跳转路由
+			this.$router.push(location)
 		}
 	},
 	computed: {
