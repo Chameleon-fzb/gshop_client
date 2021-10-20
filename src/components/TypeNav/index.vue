@@ -123,9 +123,12 @@ export default {
 					query,
 					params: { keyword: this.$route.params.keyword }
 				}
-				console.log(location)
 				// 跳转到search页面
 				this.$router.push(location)
+				/**
+				 * * 点击导航列表后 隐藏 列表
+				 */
+				this.hideFirst()
 			}
 		},
 		/**
@@ -150,6 +153,10 @@ export default {
 		hideFirst() {
 			this.currentIndex = -2
 			if (!this.isHome) this.isShowFirst = false
+			//*  转到 其他页面
+			if (!this.$route.path === '/' && this.isHome) {
+				this.isHome == false
+			}
 		}
 	}
 }
