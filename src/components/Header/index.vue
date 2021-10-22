@@ -81,9 +81,17 @@ export default {
 			// console.log(this.$router.push(location).catch(e)=>{
 			// 	console.log(e);
 			// });
-
+			// this.keyword = ''
 			this.$router.push(location)
 		}
+	},
+	mounted() {
+		this.$bus.$on('clearKeyword', () => {
+			this.keyword = ''
+		})
+	},
+	beforeDestroy() {
+		this.$bus.$off('clearKeyword')
 	}
 }
 </script>

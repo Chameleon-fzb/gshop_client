@@ -285,6 +285,7 @@ export default {
 			}
 			// 重新跳转路由
 			this.$router.push(location)
+			this.$bus.$emit('clearKeyword')
 		}
 	},
 	computed: {
