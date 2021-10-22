@@ -124,6 +124,7 @@ export default {
 					params: { keyword: this.$route.params.keyword }
 				}
 				// 跳转到search页面
+				console.log(this.$route)
 				this.$route.name != 'search'
 					? this.$router.push(location)
 					: this.$router.replace(location)

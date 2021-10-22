@@ -236,10 +236,10 @@ export default {
 			}
 		}
 	},
-	created() {
-		this.updateParams()
-		this.getShopList()
-	},
+	// created() {
+	// 	this.updateParams()
+	// 	this.getShopList()
+	// },
 	methods: {
 		// 更新请求参数
 		updateParams() {
@@ -292,9 +292,12 @@ export default {
 		...mapGetters(['goodsList'])
 	},
 	watch: {
-		$route() {
-			this.updateParams()
-			this.getShopList()
+		$route: {
+			handel() {
+				this.updateParams()
+				this.getShopList()
+			},
+			immediate: true //初始化执行一次
 		}
 	}
 }

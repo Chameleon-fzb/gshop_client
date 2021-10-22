@@ -5,7 +5,7 @@ import Search from '@/pages/Search'
 
 export default [
 	{
-		// name: 'home',
+		name: 'home',
 		path: '/',
 		component: Home
 	},
