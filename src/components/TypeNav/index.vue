@@ -124,7 +124,10 @@ export default {
 					params: { keyword: this.$route.params.keyword }
 				}
 				// 跳转到search页面
-				this.$router.push(location)
+				this.$route.name != 'search'
+					? this.$router.push(location)
+					: this.$router.replace(location)
+
 				/**
 				 * * 点击导航列表后 隐藏 列表
 				 */

@@ -55,7 +55,7 @@ VueRouter.prototype.push = function(location, onResolve, onReject) {
 		return Promise.reject(err)
 	})
 }
-VueRouter.prototype.Replace = function(location, onResolve, onReject) {
+VueRouter.prototype.replace = function(location, onResolve, onReject) {
 	if (onResolve || onReject)
 		return originalReplace.call(this, location, onResolve, onReject)
 	return originalReplace.call(this, location).catch(err => {

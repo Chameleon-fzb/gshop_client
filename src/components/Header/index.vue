@@ -82,7 +82,11 @@ export default {
 			// 	console.log(e);
 			// });
 			// this.keyword = ''
-			this.$router.push(location)
+			// 跳转到search页面
+			this.$route.name != 'search'
+				? this.$router.push(location)
+				: this.$router.replace(location)
+			// this.$router.push(location)
 		}
 	},
 	mounted() {
