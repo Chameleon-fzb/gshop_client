@@ -243,6 +243,7 @@ export default {
 	methods: {
 		// 更新请求参数
 		updateParams() {
+			console.log(this.$route)
 			const { keyword } = this.$route.params
 			const {
 				category1Id,
@@ -293,7 +294,7 @@ export default {
 	},
 	watch: {
 		$route: {
-			handel() {
+			handler() {
 				this.updateParams()
 				this.getShopList()
 			},
