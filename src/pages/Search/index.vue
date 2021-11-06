@@ -19,10 +19,22 @@
 							{{ searchParams.categoryName }}
 							<i @click="removeCategory">×</i>
 						</li>
+						<li class="with-x" v-if="searchParams.trademark">
+							{{ searchParams.trademark }}
+							<i @click="removeTrademark">×</i>
+						</li>
+						<li
+							class="with-x"
+							v-for="(prop, index) in searchParams.props"
+							:key="prop"
+						>
+							{{ prop }}
+							<i @click="removeProp(index)">×</i>
+						</li>
 					</ul>
 				</div>
 				<!--selector-->
-				<SearchSelector />
+				<SearchSelector :setTrademark="setTrademark" @addProp="addProp" />
 				<!--details-->
 				<div class="details clearfix">
 					<div class="sui-navbar">
@@ -287,6 +299,29 @@ export default {
 			// 重新跳转路由
 			this.$router.push(location)
 			this.$bus.$emit('clearKeyword')
+		},
+		// 移除品牌关键字,
+		removeTrademark() {
+			this.searchParams.trademark = ''
+			this.getShopList()
+		},
+		removeProp(index) {
+			this.searchParams.props.splice(index, 1)
+			this.getShopList()
+		},
+		// 设置品牌条件
+		setTrademark(trademark) {
+			// 当前品牌已在列表中
+			if (this.searchParams.trademark === trademark) return
+			this.searchParams.trademark = trademark
+			this.getShopList()
+		},
+		// 设置品牌属性
+		addProp(prop) {
+			const { props } = this.searchParams
+			if (props.includes(prop)) return
+			this.searchParams.props.push(prop)
+			this.getShopList()
 		}
 	},
 	computed: {
