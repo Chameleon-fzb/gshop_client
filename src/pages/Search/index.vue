@@ -40,23 +40,55 @@
 					<div class="sui-navbar">
 						<div class="navbar-inner filter">
 							<ul class="sui-nav">
-								<li class="active">
-									<a href="#">综合</a>
+								<li :class="{ active: orders[0] === '1' }">
+									<a href="javascript:" @click="setOrder('1')">
+										综合
+										<i
+											v-if="orders[0] === '1'"
+											class="iconfont"
+											:class="orders[1] === 'desc' ? 'icon-down' : 'icon-up'"
+										></i>
+									</a>
 								</li>
-								<li>
-									<a href="#">销量</a>
+								<li :class="{ active: orders[0] === '3' }">
+									<a href="javascript:" @click="setOrder('3')">
+										销量
+										<i
+											v-if="orders[0] === '3'"
+											class="iconfont"
+											:class="orders[1] === 'desc' ? 'icon-down' : 'icon-up'"
+										></i>
+									</a>
 								</li>
-								<li>
-									<a href="#">新品</a>
+								<li :class="{ active: orders[0] === '5' }">
+									<a href="javascript:" @click="setOrder('5')">
+										新品
+										<i
+											v-if="orders[0] === '5'"
+											class="iconfont"
+											:class="orders[1] === 'desc' ? 'icon-down' : 'icon-up'"
+										></i>
+									</a>
 								</li>
-								<li>
-									<a href="#">评价</a>
+								<li :class="{ active: orders[0] === '4' }">
+									<a href="javascript:" @click="setOrder('4')">
+										评价
+										<i
+											v-if="orders[0] === '4'"
+											class="iconfont"
+											:class="orders[1] === 'desc' ? 'icon-down' : 'icon-up'"
+										></i>
+									</a>
 								</li>
-								<li>
-									<a href="#">价格⬆</a>
-								</li>
-								<li>
-									<a href="#">价格⬇</a>
+								<li :class="{ active: orders[0] === '2' }">
+									<a href="javascript:" @click="setOrder('2')">
+										价格
+										<i
+											v-if="orders[0] === '2'"
+											class="iconfont"
+											:class="orders[1] === 'desc' ? 'icon-down' : 'icon-up'"
+										></i>
+									</a>
 								</li>
 							</ul>
 						</div>
@@ -242,7 +274,7 @@ export default {
 				keyword: '', // 搜索关键字
 				props: [], // ["属性ID:属性值:属性名"]示例: ["2:6.0～6.24英寸:屏幕尺寸"]
 				trademark: '', // 品牌: "ID:品牌名称"示例: "1:苹果"
-				order: '', // 排序方式 1: 综合,2: 价格 asc: 升序,desc: 降序 示例: "1:desc"
+				order: '1:desc', // 排序方式 1: 综合,2: 价格 asc: 升序,desc: 降序 示例: "1:desc"
 				pageNo: 1, // 页码
 				pageSize: 10 // 每页数量
 			}
@@ -305,6 +337,7 @@ export default {
 			this.searchParams.trademark = ''
 			this.getShopList()
 		},
+		// 移除属性 关键字
 		removeProp(index) {
 			this.searchParams.props.splice(index, 1)
 			this.getShopList()
@@ -322,10 +355,27 @@ export default {
 			if (props.includes(prop)) return
 			this.searchParams.props.push(prop)
 			this.getShopList()
+		}, // 设置排序项及方式
+		setOrder(orderFlag) {
+			let [flag, type] = this.orders
+			if (flag === orderFlag) {
+				// 如果点击的是当前项  type 修 改
+				type = type === 'desc' ? 'asc' : 'desc'
+			} else {
+				// 如果点击的不是当前项 更新 flag 和 type 默认为 desc
+				flag = orderFlag
+				type = 'desc'
+			}
+			this.searchParams.order = flag + ':' + type
+			this.getShopList()
 		}
 	},
 	computed: {
-		...mapGetters(['goodsList'])
+		...mapGetters(['goodsList']),
+		/* 得到当前分类项的标识 orderFlag orderType 的数组 */
+		orders() {
+			return this.searchParams.order.split(':')
+		}
 	},
 	watch: {
 		$route: {
@@ -424,13 +474,16 @@ export default {
 						margin: 0 10px 0 0;
 						li {
 							float: left;
-							line-height: 18px;
 							a {
 								display: block;
 								cursor: pointer;
 								padding: 11px 15px;
 								color: #777;
 								text-decoration: none;
+								.iconfont.icon-up,
+								.iconfont.icon-down {
+									font-size: 6px;
+								}
 							}
 							&.active {
 								a {
