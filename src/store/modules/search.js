@@ -11,6 +11,17 @@ const mutations = {
 }
 const actions = {
 	async getSearchResults({ commit }, searchParams) {
+		// 利用浅拷贝 拷贝一份searchParams 为了不改变原对象
+		searchParams = { ...searchParams }
+		Object.keys(searchParams).forEach(key => {
+			// 判断为空 则 删除 优化请求参数
+			if (
+				searchParams[key] === '' ||
+				(Array.isArray(searchParams[key]) && searchParams[key].length === 0)
+			) {
+				delete searchParams[key]
+			}
+		})
 		const result = await reqSearch(searchParams)
 		if (result.code === 200) {
 			commit('RECEIVE_SEARCH_RESULTS', result.data)
