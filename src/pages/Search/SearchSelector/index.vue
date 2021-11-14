@@ -103,6 +103,7 @@ export default {
 					color: #e1251b;
 					font-style: italic;
 					font-size: 14px;
+					cursor: pointer;
 
 					img {
 						max-width: 100%;
@@ -117,7 +118,7 @@ export default {
 					display: block;
 					margin-right: 30px;
 					line-height: 26px;
-
+					cursor: pointer;
 					a {
 						text-decoration: none;
 						color: #666;
