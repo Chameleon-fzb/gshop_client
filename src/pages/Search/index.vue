@@ -136,35 +136,13 @@
 							</li>
 						</ul>
 					</div>
-					<div class="fr page">
-						<div class="sui-pagination clearfix">
-							<ul>
-								<li class="prev disabled">
-									<a href="#">«上一页</a>
-								</li>
-								<li class="active">
-									<a href="#">1</a>
-								</li>
-								<li>
-									<a href="#">2</a>
-								</li>
-								<li>
-									<a href="#">3</a>
-								</li>
-								<li>
-									<a href="#">4</a>
-								</li>
-								<li>
-									<a href="#">5</a>
-								</li>
-								<li class="dotted"><span>...</span></li>
-								<li class="next">
-									<a href="#">下一页»</a>
-								</li>
-							</ul>
-							<div><span>共10页&nbsp;</span></div>
-						</div>
-					</div>
+					<Pagination
+						:currentPage="searchParams.pageNo"
+						:total="total"
+						:pageSize="searchParams.pageSize"
+						:showPageNo="5"
+						@currentChange="currentChange"
+					/>
 				</div>
 				<!--hotsale-->
 				<div class="clearfix hot-sale">
@@ -273,10 +251,10 @@ export default {
 				categoryName: '', // 分类名称
 				keyword: '', // 搜索关键字
 				props: [], // ["属性ID:属性值:属性名"]示例: ["2:6.0～6.24英寸:屏幕尺寸"]
-				trademark: '', // 品牌: "ID:品牌名称"示例: "1:苹果"
+				// trademark: '', // 品牌: "ID:品牌名称"示例: "1:苹果"
 				order: '1:desc', // 排序方式 1: 综合,2: 价格 asc: 升序,desc: 降序 示例: "1:desc"
 				pageNo: 1, // 页码
-				pageSize: 10 // 每页数量
+				pageSize: 5 // 每页数量
 			}
 		}
 	},
@@ -305,7 +283,9 @@ export default {
 			}
 		},
 		// 获取数据
-		getShopList() {
+		getShopList(page = 1) {
+			/* 更改搜索条件后 页码默认 开始为一 */
+			this.searchParams.pageNo = page
 			this.$store.dispatch('getSearchResults', this.searchParams)
 		},
 		// 移除列表搜索项
@@ -334,7 +314,9 @@ export default {
 		},
 		// 移除品牌关键字,
 		removeTrademark() {
-			this.searchParams.trademark = ''
+			// this.searchParams.trademark = ''
+			// 响应式删除数据 会导致页面更新
+			this.$delete(this.searchParams, 'trademark')
 			this.getShopList()
 		},
 		// 移除属性 关键字
@@ -346,7 +328,9 @@ export default {
 		setTrademark(trademark) {
 			// 当前品牌已在列表中
 			if (this.searchParams.trademark === trademark) return
-			this.searchParams.trademark = trademark
+			// 响应式添加数据 会导致页面更新
+			this.$set(this.searchParams, 'trademark', trademark)
+			// this.searchParams.trademark = trademark
 			this.getShopList()
 		},
 		// 设置品牌属性
@@ -355,7 +339,8 @@ export default {
 			if (props.includes(prop)) return
 			this.searchParams.props.push(prop)
 			this.getShopList()
-		}, // 设置排序项及方式
+		},
+		// 设置排序项及方式
 		setOrder(orderFlag) {
 			let [flag, type] = this.orders
 			if (flag === orderFlag) {
@@ -368,10 +353,14 @@ export default {
 			}
 			this.searchParams.order = flag + ':' + type
 			this.getShopList()
+		},
+		// 设置当前页码发生改变后的回调
+		currentChange(page) {
+			this.getShopList(page)
 		}
 	},
 	computed: {
-		...mapGetters(['goodsList']),
+		...mapGetters(['goodsList', 'total']),
 		/* 得到当前分类项的标识 orderFlag orderType 的数组 */
 		orders() {
 			return this.searchParams.order.split(':')
@@ -596,82 +585,6 @@ export default {
 								}
 							}
 						}
-					}
-				}
-			}
-			.page {
-				width: 733px;
-				height: 66px;
-				overflow: hidden;
-				float: right;
-				.sui-pagination {
-					margin: 18px 0;
-					ul {
-						margin-left: 0;
-						margin-bottom: 0;
-						vertical-align: middle;
-						width: 490px;
-						float: left;
-						li {
-							line-height: 18px;
-							display: inline-block;
-							a {
-								position: relative;
-								float: left;
-								line-height: 18px;
-								text-decoration: none;
-								background-color: #fff;
-								border: 1px solid #e0e9ee;
-								margin-left: -1px;
-								font-size: 14px;
-								padding: 9px 18px;
-								color: #333;
-							}
-							&.active {
-								a {
-									background-color: #fff;
-									color: #e1251b;
-									border-color: #fff;
-									cursor: default;
-								}
-							}
-							&.prev {
-								a {
-									background-color: #fafafa;
-								}
-							}
-							&.disabled {
-								a {
-									color: #999;
-									cursor: default;
-								}
-							}
-							&.dotted {
-								span {
-									margin-left: -1px;
-									position: relative;
-									float: left;
-									line-height: 18px;
-									text-decoration: none;
-									background-color: #fff;
-									font-size: 14px;
-									border: 0;
-									padding: 9px 18px;
-									color: #333;
-								}
-							}
-							&.next {
-								a {
-									background-color: #fafafa;
-								}
-							}
-						}
-					}
-					div {
-						color: #333;
-						font-size: 14px;
-						float: right;
-						width: 241px;
 					}
 				}
 			}

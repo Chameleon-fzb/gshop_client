@@ -34,7 +34,9 @@ const getters = {
 	/* 属性列表 */
 	attrsList: state => state.searchResult.attrsList || [],
 	/* 品牌列表 */
-	trademarkList: state => state.searchResult.trademarkList || []
+	trademarkList: state => state.searchResult.trademarkList || [],
+	/* 商品总数量 */
+	total: state => state.searchResult.total || 0
 }
 export default {
 	state,
