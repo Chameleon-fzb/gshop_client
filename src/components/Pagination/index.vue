@@ -3,7 +3,7 @@
 		<div class="pagination">
 			<!-- 上一页 -->
 			<button
-				:class="{ disabled: myCurrentPage === 1 }"
+				:class="{ disabled: myCurrentPage === 1 || totalPages <= 0 }"
 				@click="changeCurrentPage(myCurrentPage - 1)"
 			>
 				上一页
@@ -36,7 +36,7 @@
 				{{ totalPages }}
 			</button>
 			<button
-				:class="{ disabled: myCurrentPage === totalPages }"
+				:class="{ disabled: myCurrentPage === totalPages || totalPages <= 0 }"
 				@click="changeCurrentPage(myCurrentPage + 1)"
 			>
 				下一页
@@ -87,15 +87,15 @@ export default {
 			let start, end
 			const { myCurrentPage, showPageNo, totalPages } = this
 			/* 计算start */
-			/* 
+			/*
 			myCurrentPage ,showPageNo, totalPages
 			 4                3            12      123[4]56789
 			 5                3            12      1234[5]6789
-			 4                5            12  
+			 4                5            12
 			 5                5            12
-			 start = 3 = 4-1 = myCurrentPage - (showPageNo-1)/2 
+			 start = 3 = 4-1 = myCurrentPage - (showPageNo-1)/2
 			 start = 4 = 5-1 = myCurrentPage -  (showPageNo-1)/2
-				 end = 5 = 4+1 = myCurrentPage + (showPageNo-1)/2 
+				 end = 5 = 4+1 = myCurrentPage + (showPageNo-1)/2
 				 end = 6 = 5+1 = myCurrentPage + (showPageNo-1)/2
 
  			 */
@@ -126,10 +126,19 @@ export default {
 	methods: {
 		/* 修改当前页码 */
 		changeCurrentPage(page) {
-			if (this.myCurrentPage === page) return
+			if (page <= 0 || page > this.totalPages || page === this.myCurrentPage)
+				return
 			this.myCurrentPage = page
 			/* 触发自定义事件 */
 			this.$emit('currentChange', page)
+		}
+	},
+	watch: {
+		/* 子组件监视父组件传入数据的变化 */
+		currentPage: {
+			handler(newPage) {
+				this.myCurrentPage = newPage
+			}
 		}
 	}
 }

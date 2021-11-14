@@ -141,7 +141,7 @@
 						:total="total"
 						:pageSize="searchParams.pageSize"
 						:showPageNo="5"
-						@currentChange="currentChange"
+						@currentChange="getShopList"
 					/>
 				</div>
 				<!--hotsale-->
@@ -353,11 +353,11 @@ export default {
 			}
 			this.searchParams.order = flag + ':' + type
 			this.getShopList()
-		},
-		// 设置当前页码发生改变后的回调
-		currentChange(page) {
-			this.getShopList(page)
 		}
+		// // 设置当前页码发生改变后的回调
+		// currentChange(page) {
+		// 	this.getShopList(page)
+		// }
 	},
 	computed: {
 		...mapGetters(['goodsList', 'total']),
