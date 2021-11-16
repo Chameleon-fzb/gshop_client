@@ -35,10 +35,12 @@ export const reqLikes = () => mockAjax('/likes')
  */
 
 export const reqSearch = searchParams => ajax.post('/list', searchParams)
-// ;(async () => {
-// 	const result = await reqSearch({
-// 		pageNo: 1,
-// 		pageSize: 10
-// 	})
-// 	console.log(result)
-// })()
+
+/**
+ * ? detail页面
+ */
+export const reqDetailInfo = skuId =>
+	ajax({
+		url: `/item/${skuId}`,
+		method: 'GET'
+	})
