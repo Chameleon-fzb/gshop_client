@@ -67,5 +67,9 @@ VueRouter.prototype.replace = function(location, onResolve, onReject) {
 }
 export default new VueRouter({
 	mode: 'history',
-	routes
+	routes,
+	//滚动行为默认为最顶部
+	scrollBehavior() {
+		return { x: 0, y: 0 }
+	}
 })
