@@ -1,7 +1,7 @@
 <template>
 	<div>
 		<TypeNav />
-		<Listcontainer />
+		<ListContainer />
 		<TodyRecommend />
 		<Rank />
 		<Like />
@@ -10,7 +10,7 @@
 	</div>
 </template>
 <script>
-import Listcontainer from './ListContainer'
+import ListContainer from './ListContainer'
 import TodyRecommend from './TodayRecommend'
 import Like from './Like'
 import Rank from './Rank'
@@ -31,7 +31,7 @@ export default {
 		})
 	},
 	components: {
-		Listcontainer,
+		ListContainer,
 		TodyRecommend,
 		Like,
 		Rank,
