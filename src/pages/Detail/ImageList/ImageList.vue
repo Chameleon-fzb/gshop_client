@@ -29,8 +29,8 @@ export default {
 					nextEl: '.swiper-button-next',
 					prevEl: '.swiper-button-prev'
 				},
-				slidesPerView: 7,
-				slidesPerGroup: 7
+				slidesPerView: 5,
+				slidesPerGroup: 5
 			},
 
 			// 默认选中 图片 的img的 下标
@@ -112,7 +112,7 @@ export default {
 		img {
 			border: 1px solid #ccc;
 			padding: 2px;
-			width: 100%;
+			width: 54px;
 			height: 100%;
 			display: block;
 			cursor: pointer;
