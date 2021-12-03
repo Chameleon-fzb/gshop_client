@@ -105,9 +105,9 @@
 						</div>
 						<div class="cartWrap">
 							<div class="controls">
-								<input autocomplete="off" class="itxt" />
-								<a href="javascript:" class="plus">+</a>
-								<a href="javascript:" class="mins">-</a>
+								<input autocomplete="off" class="itxt" v-model="num" />
+								<a href="javascript:" class="plus" @click="add">+</a>
+								<a href="javascript:" class="mins" @click="decrease">-</a>
 							</div>
 							<div class="add">
 								<a href="javascript:">加入购物车</a>
@@ -375,7 +375,30 @@ export default {
 	data() {
 		return {
 			skuId: '',
-			imgIndex: 0
+			imgIndex: 0,
+			num: 0
+		}
+	},
+	methods: {
+		getSkuDetailInfo() {
+			this.$store.dispatch('getDetailInfo', this.skuId)
+		},
+		// 排他处理用户选择销售属性值
+		changeChecked(currentAttrValue, spuSaleAttrValueList) {
+			spuSaleAttrValueList.forEach(item => {
+				item.isChecked = '0'
+			})
+			currentAttrValue.isChecked = '1'
+		},
+		//商品数量增加
+		add() {
+			if (this.num >= 10) return
+			this.num++
+		},
+		// 商品数量减少
+		decrease() {
+			if (this.num <= 0) return
+			this.num--
 		}
 	},
 	computed: {
@@ -389,18 +412,6 @@ export default {
 	},
 	mounted() {
 		this.getSkuDetailInfo()
-	},
-	methods: {
-		getSkuDetailInfo() {
-			this.$store.dispatch('getDetailInfo', this.skuId)
-		},
-		// 排他处理用户选择销售属性值
-		changeChecked(currentAttrValue, spuSaleAttrValueList) {
-			spuSaleAttrValueList.forEach(item => {
-				item.isChecked = '0'
-			})
-			currentAttrValue.isChecked = '1'
-		}
 	}
 }
 </script>
