@@ -8,7 +8,9 @@ module.exports = {
 		proxy: {
 			'/api': {
 				//只对请求路由以/api开头的请求进行代理转发
-				target: 'http://api.atguigu.cn', //转发的目标url
+				// target: 'http://api.atguigu.cn', //转发的目标url
+				// target: '82.156.11.187', //转发的目标url
+				target: 'http://39.98.123.211', //转发的目标url
 				changeOrigin: true //支持跨域
 				// pathRewrite:{'^/api':''}
 			}
