@@ -115,7 +115,7 @@
 								<a href="javascript:" class="mins" @click="decrease">-</a>
 							</div>
 							<div class="add">
-								<a href="javascript:">加入购物车</a>
+								<a href="javascript:" @click="addToCar">加入购物车</a>
 							</div>
 						</div>
 					</div>
@@ -404,11 +404,14 @@ export default {
 		},
 		//商品数量增加
 		add() {
-			this.skuNum = this.skuNum >= 99 ? 99 : this.skuNum++
+			this.skuNum = this.skuNum >= 99 ? 99 : ++this.skuNum
 		},
 		// 商品数量减少
 		decrease() {
-			this.skuNum = this.skuNum < 1 ? 0 : this.skuNum--
+			this.skuNum = this.skuNum < 1 ? 0 : --this.skuNum
+		},
+		addToCar() {
+			console.log(this.skuNum)
 		}
 	},
 	computed: {
