@@ -398,7 +398,7 @@ export default {
 		// 用户输入
 		changeSkuNum(event) {
 			let value = parseInt(event.target.value)
-			;(isNaN(value) || value < 0) && (value = 0)
+			!(value >= 0) && (value = 0)
 			value > 99 && (value = 99)
 			this.skuNum = value
 		},
