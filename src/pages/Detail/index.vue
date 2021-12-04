@@ -115,7 +115,7 @@
 								<a href="javascript:" class="mins" @click="decrease">-</a>
 							</div>
 							<div class="add">
-								<a href="javascript:" @click="addToCar">加入购物车</a>
+								<a href="javascript:" @click="addToShopCart">加入购物车</a>
 							</div>
 						</div>
 					</div>
@@ -398,7 +398,7 @@ export default {
 		// 用户输入
 		changeSkuNum(event) {
 			let value = parseInt(event.target.value)
-			!(value >= 0) && (value = 0)
+			!(value > 0) && (value = 0)
 			value > 99 && (value = 99)
 			this.skuNum = value
 		},

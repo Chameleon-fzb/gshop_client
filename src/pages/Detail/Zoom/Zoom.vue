@@ -30,7 +30,7 @@ export default {
 		},
 		// 放大镜的操作
 		handler(event) {
-			let [mask, bigImg] = [this.$refs.mask, this.$refs.bigImg]
+			let { mask, bigImg } = this.$refs
 			// 遮罩的大小
 			let [maskWidth, maskHeight] = [mask.offsetWidth, mask.offsetHeight]
 			// 鼠标的位置
