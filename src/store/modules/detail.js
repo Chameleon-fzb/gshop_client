@@ -5,13 +5,11 @@ const state = {
 const mutations = {
 	RECEIVE_SKU_DETAIL_INFO(state, skuDetailInfo) {
 		state.skuDetailInfo = skuDetailInfo
-		console.log(state)
 	}
 }
 const actions = {
 	async getDetailInfo({ commit }, skuId) {
 		const result = await reqDetailInfo(skuId)
-		console.log(result)
 		if (result.code === 200) {
 			commit('RECEIVE_SKU_DETAIL_INFO', result.data)
 		}

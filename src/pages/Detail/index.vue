@@ -105,7 +105,12 @@
 						</div>
 						<div class="cartWrap">
 							<div class="controls">
-								<input autocomplete="off" class="itxt" v-model="num" />
+								<input
+									autocomplete="off"
+									class="itxt"
+									v-model="skuNum"
+									@change="changeSkuNum"
+								/>
 								<a href="javascript:" class="plus" @click="add">+</a>
 								<a href="javascript:" class="mins" @click="decrease">-</a>
 							</div>
@@ -376,7 +381,7 @@ export default {
 		return {
 			skuId: '',
 			imgIndex: 0,
-			num: 0
+			skuNum: 0
 		}
 	},
 	methods: {
@@ -390,15 +395,26 @@ export default {
 			})
 			currentAttrValue.isChecked = '1'
 		},
+		// 用户输入
+		changeSkuNum(event) {
+			let value = parseInt(event.target.value)
+
+			if (isNaN(value) || value < 0) value = 0
+
+			if (value > 99) value = 99
+			this.skuNum = value
+			console.log(typeof value)
+			console.log(value)
+		},
 		//商品数量增加
 		add() {
-			if (this.num >= 10) return
-			this.num++
+			if (this.skuNum >= 99) return
+			this.skuNum++
 		},
 		// 商品数量减少
 		decrease() {
-			if (this.num <= 0) return
-			this.num--
+			if (this.skuNum < 1) return
+			this.skuNum--
 		}
 	},
 	computed: {
