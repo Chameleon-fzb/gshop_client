@@ -398,21 +398,17 @@ export default {
 		// 用户输入
 		changeSkuNum(event) {
 			let value = parseInt(event.target.value)
-
-			if (isNaN(value) || value < 0) value = 0
-
-			if (value > 99) value = 99
+			;(isNaN(value) || value < 0) && (value = 0)
+			value > 99 && (value = 99)
 			this.skuNum = value
 		},
 		//商品数量增加
 		add() {
-			if (this.skuNum >= 99) return
-			this.skuNum++
+			this.skuNum = this.skuNum >= 99 ? 99 : this.skuNum++
 		},
 		// 商品数量减少
 		decrease() {
-			if (this.skuNum < 1) return
-			this.skuNum--
+			this.skuNum = this.skuNum < 1 ? 0 : this.skuNum--
 		}
 	},
 	computed: {

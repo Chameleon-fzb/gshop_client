@@ -30,25 +30,19 @@ export default {
 		},
 		// 放大镜的操作
 		handler(event) {
-			let mask = this.$refs.mask,
-				bigImg = this.$refs.bigImg
+			let [mask, bigImg] = [this.$refs.mask, this.$refs.bigImg]
 			// 遮罩的大小
-			let maskWidth = mask.offsetWidth,
-				maskHeight = mask.offsetHeight
+			let [maskWidth, maskHeight] = [mask.offsetWidth, mask.offsetHeight]
 			// 鼠标的位置
-			let mouseX = event.offsetX,
-				mouseY = event.offsetY
+			let [mouseX, mouseY] = [event.offsetX, event.offsetY]
 			//计算遮罩的位置
-			let left = mouseX - maskWidth / 2,
-				top = mouseY - maskHeight / 2
+			let [left, top] = [mouseX - maskWidth / 2, mouseY - maskHeight / 2]
 			// 限制不超过边框
-			if (left < 0) left = 0
+			left < 0 && (left = 0)
+			left >= maskWidth && maskWidth
 
-			if (left >= maskWidth) left = maskWidth
-
-			if (top < 0) top = 0
-
-			if (top >= maskHeight) top = maskHeight
+			top < 0 && (top = 0)
+			top >= maskHeight && (top = maskHeight)
 			// 改变遮罩的位置
 			mask.style.left = left + 'px'
 			mask.style.top = top + 'px'
