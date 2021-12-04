@@ -403,8 +403,6 @@ export default {
 
 			if (value > 99) value = 99
 			this.skuNum = value
-			console.log(typeof value)
-			console.log(value)
 		},
 		//商品数量增加
 		add() {
