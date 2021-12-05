@@ -381,7 +381,7 @@ export default {
 		return {
 			skuId: '',
 			imgIndex: 0,
-			skuNum: 0
+			skuNum: 1
 		}
 	},
 	methods: {
@@ -398,7 +398,7 @@ export default {
 		// 用户输入
 		changeSkuNum(event) {
 			let value = parseInt(event.target.value)
-			!(value > 0) && (value = 0)
+			!(value > 1) && (value = 1)
 			value > 99 && (value = 99)
 			this.skuNum = value
 		},
@@ -408,7 +408,7 @@ export default {
 		},
 		// 商品数量减少
 		decrease() {
-			this.skuNum = this.skuNum < 1 ? 0 : --this.skuNum
+			this.skuNum = this.skuNum < 2 ? 1 : --this.skuNum
 		},
 		async addToShopCart() {
 			const { skuId, skuNum } = this
@@ -418,8 +418,9 @@ export default {
 					skuNum
 				})
 				alert('添加购物车成功')
+				sessionStorage.setItem('SKU_INFO_KEY', JSON.stringify(this.skuInfo))
 				// 成功后跳转路由 编程式路由跳转
-				// this.$router.push()
+				this.$router.push('/addCartSuccess?skuNum=' + skuNum)
 			} catch (error) {
 				alert(error.message)
 			}
