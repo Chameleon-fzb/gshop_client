@@ -410,8 +410,19 @@ export default {
 		decrease() {
 			this.skuNum = this.skuNum < 1 ? 0 : --this.skuNum
 		},
-		addToCar() {
-			console.log(this.skuNum)
+		async addToShopCart() {
+			const { skuId, skuNum } = this
+			try {
+				await this.$store.dispatch('getUpdShopCartMsg', {
+					skuId,
+					skuNum
+				})
+				alert('添加购物车成功')
+				// 成功后跳转路由 编程式路由跳转
+				// this.$router.push()
+			} catch (error) {
+				alert(error.message)
+			}
 		}
 	},
 	computed: {

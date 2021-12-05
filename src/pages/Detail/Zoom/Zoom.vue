@@ -39,7 +39,7 @@ export default {
 			let [left, top] = [mouseX - maskWidth / 2, mouseY - maskHeight / 2]
 			// 限制不超过边框
 			left < 0 && (left = 0)
-			left >= maskWidth && maskWidth
+			left >= maskWidth && (left = maskWidth)
 
 			top < 0 && (top = 0)
 			top >= maskHeight && (top = maskHeight)
