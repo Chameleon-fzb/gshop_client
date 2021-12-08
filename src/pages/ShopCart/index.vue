@@ -76,10 +76,16 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
 export default {
 	name: 'ShopCart',
 	mounted() {
 		this.$store.dispatch('getShopCartList')
+	},
+	computed: {
+		...mapState({
+			shopCartList: state => state.shopCart.shopCartList
+		})
 	}
 }
 </script>

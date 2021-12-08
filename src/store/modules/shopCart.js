@@ -1,7 +1,14 @@
 import { reqAddOrUpdShopCart } from '@/api'
+import { reqShopCart } from '@/api'
 
-const state = {}
-const mutations = {}
+const state = {
+	shopCartList: []
+}
+const mutations = {
+	RECEIVE_SHOP_CART_LIST(state, shopCartList) {
+		state.shopCartList = shopCartList
+	}
+}
 const actions = {
 	async getUpdShopCartMsg(_, { skuId, skuNum }) {
 		const result = await reqAddOrUpdShopCart(skuId, skuNum)
@@ -10,6 +17,10 @@ const actions = {
 		} else {
 			return Promise.reject(new Error('failed'))
 		}
+	},
+	async getShopCartList({ commit }) {
+		const result = await reqShopCart()
+		result.code === 200 && commit('RECEIVE_SHOP_CART_LIST', result.data)
 	}
 }
 const getters = {}
