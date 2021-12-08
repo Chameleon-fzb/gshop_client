@@ -77,7 +77,10 @@
 
 <script>
 export default {
-	name: 'ShopCart'
+	name: 'ShopCart',
+	mounted() {
+		this.$store.dispatch('getShopCartList')
+	}
 }
 </script>
 

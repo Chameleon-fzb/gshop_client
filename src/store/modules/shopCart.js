@@ -3,10 +3,10 @@ import { reqAddOrUpdShopCart } from '@/api'
 const state = {}
 const mutations = {}
 const actions = {
-	async getUpdShopCartMsg({ commit }, { skuId, skuNum }) {
+	async getUpdShopCartMsg(_, { skuId, skuNum }) {
 		const result = await reqAddOrUpdShopCart(skuId, skuNum)
 		if (result.code === 200) {
-			return ok
+			return 'ok'
 		} else {
 			return Promise.reject(new Error('failed'))
 		}
