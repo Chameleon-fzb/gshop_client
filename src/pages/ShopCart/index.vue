@@ -11,33 +11,40 @@
 				<div class="cart-th6">操作</div>
 			</div>
 			<div class="cart-body">
-				<ul class="cart-list">
+				<ul
+					class="cart-list"
+					v-for="cartItem in cartInfoList"
+					:key="cartItem.id"
+				>
 					<li class="cart-list-con1">
-						<input type="checkbox" name="chk_list" />
+						<input
+							type="checkbox"
+							name="chk_list"
+							:checked="cartItem.isChecked"
+						/>
 					</li>
 					<li class="cart-list-con2">
-						<img src="./images/goods1.png" />
+						<img :src="cartItem.imgUrl" />
 						<div class="item-msg">
-							米家（MIJIA） 小米小白智能摄像机增强版
-							1080p高清360度全景拍摄AI增强
+							{{ cartItem.skuName.substring(0, 60) + '...' }}
 						</div>
 					</li>
 					<li class="cart-list-con4">
-						<span class="price">399.00</span>
+						<span class="price">{{ cartItem.skuPrice }}</span>
 					</li>
 					<li class="cart-list-con5">
 						<a href="javascript:void(0)" class="mins">-</a>
 						<input
 							autocomplete="off"
 							type="text"
-							value="1"
+							:value="cartItem.skuNum"
 							minnum="1"
 							class="itxt"
 						/>
 						<a href="javascript:void(0)" class="plus">+</a>
 					</li>
 					<li class="cart-list-con6">
-						<span class="sum">399</span>
+						<span class="sum">{{ cartItem.skuNum * cartItem.skuPrice }}</span>
 					</li>
 					<li class="cart-list-con7">
 						<a href="#none" class="sindelet">删除</a>
@@ -76,16 +83,14 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import { mapGetters } from 'vuex'
 export default {
 	name: 'ShopCart',
 	mounted() {
 		this.$store.dispatch('getShopCartList')
 	},
 	computed: {
-		...mapState({
-			shopCartList: state => state.shopCart.shopCartList
-		})
+		...mapGetters(['cartInfoList'])
 	}
 }
 </script>
@@ -113,7 +118,7 @@ export default {
 			}
 
 			.cart-th1 {
-				width: 22%;
+				width: 20%;
 
 				input {
 					vertical-align: middle;
@@ -125,16 +130,14 @@ export default {
 			}
 
 			.cart-th2 {
-				width: 26%;
+				width: 28%;
 			}
 
-			.cart-th3 {
-				width: 13%;
-			}
+			.cart-th3,
 			.cart-th4,
 			.cart-th5,
 			.cart-th6 {
-				width: 12%;
+				width: 13%;
 			}
 		}
 
@@ -152,11 +155,11 @@ export default {
 				}
 
 				.cart-list-con1 {
-					width: 13%;
+					width: 10%;
 				}
 
 				.cart-list-con2 {
-					width: 35%;
+					width: 38%;
 
 					img {
 						width: 82px;
@@ -210,7 +213,7 @@ export default {
 				}
 
 				.cart-list-con6 {
-					width: 10%;
+					width: 12%;
 
 					.sum {
 						font-size: 16px;
