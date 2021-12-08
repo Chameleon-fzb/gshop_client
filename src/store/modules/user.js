@@ -19,7 +19,9 @@ const actions = {
 		result.code === 200 && commit('RECEIVE_SHOP_CART_LIST', result.data)
 	}
 }
-const getters = {}
+const getters = {
+	cartInfoList: () => this.state.shopCartList.cartInfoList
+}
 export default {
 	state,
 	mutations,
