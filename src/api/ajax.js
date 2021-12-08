@@ -6,6 +6,7 @@ axios 二次封装
 4. 统一处理请求错误, 具体请求也可以选择处理或不处理
 */
 
+import store from '@/store'
 import axios from 'axios'
 import NProgress from 'nprogress'
 import 'nprogress/nprogress.css'
@@ -26,6 +27,10 @@ const service = axios.create({
 service.interceptors.request.use(config => {
 	// ?必须返回config
 	NProgress.start()
+	let userTempId = store.state.user.userTempId
+	if (userTempId) {
+		config.headers.userTempId = userTempId
+	}
 	return config //后面会根据返回的 config 使用xhr对象发送 ajax 请求
 })
 

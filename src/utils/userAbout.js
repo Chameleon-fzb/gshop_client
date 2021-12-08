@@ -2,11 +2,11 @@
 // 首先从localStorage当中区获取,如果没有
 // 再调用uuid创建新的标识 还要存在localStorage
 
-import { v4 as uuidv4 } from 'uuid'
+import { v4 as uuidV4 } from 'uuid'
 function getUserTempId() {
 	let userTempId = localStorage.getItem('USER_TEMP_ID_KEY')
 	if (!userTempId) {
-		userTempId = uuidv4()
+		userTempId = uuidV4()
 		localStorage.setItem('USER_TEMP_ID_KEY', userTempId)
 	}
 	return userTempId
