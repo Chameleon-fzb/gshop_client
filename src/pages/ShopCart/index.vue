@@ -21,6 +21,7 @@
 							type="checkbox"
 							name="chk_list"
 							:checked="cartItem.isChecked"
+							@click="changeIsChecked(cartItem.id)"
 						/>
 					</li>
 					<li class="cart-list-con2">
@@ -44,7 +45,9 @@
 						<a href="javascript:void(0)" class="plus">+</a>
 					</li>
 					<li class="cart-list-con6">
-						<span class="sum">{{ cartItem.skuNum * cartItem.skuPrice }}</span>
+						<span class="sum">
+							{{ cartItem.skuNum * cartItem.skuPrice }}
+						</span>
 					</li>
 					<li class="cart-list-con7">
 						<a href="#none" class="sindelet">删除</a>
@@ -56,7 +59,12 @@
 		</div>
 		<div class="cart-tool">
 			<div class="select-all">
-				<input class="chooseAll" type="checkbox" />
+				<input
+					class="chooseAll"
+					type="checkbox"
+					:checked="isAllChecked"
+					@click="changeIsAllCheck"
+				/>
 				<span>全选</span>
 			</div>
 			<div class="option">
@@ -67,12 +75,12 @@
 			<div class="money-box">
 				<div class="chosed">
 					已选择
-					<span>0</span>
+					<span>{{ isCheckNum }}</span>
 					件商品
 				</div>
 				<div class="sumprice">
 					<em>总价（不含运费） ：</em>
-					<i class="summoney">0</i>
+					<i class="summoney">{{ TotalPrice }}</i>
 				</div>
 				<div class="sumbtn">
 					<a class="sum-btn" href="###" target="_blank">结算</a>
@@ -90,7 +98,35 @@ export default {
 		this.$store.dispatch('getShopCartList')
 	},
 	computed: {
-		...mapGetters(['cartInfoList'])
+		...mapGetters(['cartInfoList']),
+		isCheckList() {
+			return this.cartInfoList.filter(item => item.isChecked === 1)
+		},
+		isCheckNum() {
+			return this.isCheckList.length
+		},
+		isAllChecked() {
+			return this.isCheckNum === this.cartInfoList.length ? 1 : 0
+		},
+		TotalPrice() {
+			return this.isCheckList.reduce(
+				(prevValue, item) => prevValue + item.skuNum * item.skuPrice,
+				0
+			)
+		}
+	},
+	methods: {
+		changeIsChecked(id) {
+			this.cartInfoList.forEach(item => {
+				item.id === id && (item.isChecked = item.isChecked ? 0 : 1)
+			})
+		},
+		changeIsAllCheck() {
+			const { isAllChecked } = this
+			this.cartInfoList.forEach(item => {
+				item.isChecked = isAllChecked ? 0 : 1
+			})
+		}
 	}
 }
 </script>
@@ -115,6 +151,7 @@ export default {
 
 			& > div {
 				float: left;
+				// caret-color: rgba(0, 0, 0, 0);
 			}
 
 			.cart-th1 {
@@ -152,6 +189,7 @@ export default {
 
 				& > li {
 					float: left;
+					// caret-color: rgba(0, 0, 0, 0);
 				}
 
 				.cart-list-con1 {
@@ -202,6 +240,7 @@ export default {
 						float: left;
 						text-align: center;
 						font-size: 14px;
+						caret-color: rgb(0, 0, 0);
 					}
 
 					.plus {
