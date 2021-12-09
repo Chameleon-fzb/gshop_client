@@ -59,12 +59,8 @@
 		</div>
 		<div class="cart-tool">
 			<div class="select-all">
-				<input
-					class="chooseAll"
-					type="checkbox"
-					:checked="isAllChecked"
-					@click="changeIsAllCheck"
-				/>
+				<input class="chooseAll" type="checkbox" v-model="isAllChecked" />
+				<!-- @click="changeIsAllCheck" -->
 				<span>全选</span>
 			</div>
 			<div class="option">
@@ -100,13 +96,20 @@ export default {
 	computed: {
 		...mapGetters(['cartInfoList']),
 		isCheckList() {
-			return this.cartInfoList.filter(item => item.isChecked === 1)
+			return this.cartInfoList.filter(item => item.isChecked)
 		},
 		isCheckNum() {
-			return this.isCheckList.length
+			return this.isCheckList.reduce((prev, item) => (prev += item.skuNum), 0)
 		},
-		isAllChecked() {
-			return this.isCheckNum === this.cartInfoList.length ? 1 : 0
+		isAllChecked: {
+			get() {
+				return this.isCheckList.length === this.cartInfoList.length ? 1 : 0
+			},
+			set(newValue) {
+				this.cartInfoList.forEach(item => {
+					item.isChecked = newValue ? 1 : 0
+				})
+			}
 		},
 		TotalPrice() {
 			return this.isCheckList.reduce(
@@ -119,12 +122,6 @@ export default {
 		changeIsChecked(id) {
 			this.cartInfoList.forEach(item => {
 				item.id === id && (item.isChecked = item.isChecked ? 0 : 1)
-			})
-		},
-		changeIsAllCheck() {
-			const { isAllChecked } = this
-			this.cartInfoList.forEach(item => {
-				item.isChecked = isAllChecked ? 0 : 1
 			})
 		}
 	}
@@ -193,6 +190,9 @@ export default {
 				.cart-list-con1 {
 					line-height: 82px;
 					width: 10%;
+					& > input {
+						caret-color: transparent;
+					}
 				}
 
 				.cart-list-con2 {
@@ -292,6 +292,7 @@ export default {
 			}
 
 			input {
+				caret-color: transparent;
 				vertical-align: middle;
 			}
 		}
