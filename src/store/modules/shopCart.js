@@ -24,6 +24,9 @@ const actions = {
 	}
 }
 const getters = {
-	cartInfoList: state => state.shopCartList[0].cartInfoList || []
+	cartInfoList: state => {
+		let cartInfo = state.shopCartList[0] || {}
+		return cartInfo.cartInfoList || []
+	}
 }
 export default { state, mutations, actions, getters }

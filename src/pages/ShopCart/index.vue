@@ -195,7 +195,7 @@ export default {
 					input {
 						border: 1px solid #ddd;
 						width: 40px;
-						height: 33px;
+						height: 33.5px;
 						float: left;
 						text-align: center;
 						font-size: 14px;
