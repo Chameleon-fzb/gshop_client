@@ -1,6 +1,6 @@
 <template>
 	<div class="cart">
-		<h4>全部商品</h4>
+		<h4>我的购物车</h4>
 		<div class="cart-main">
 			<div class="cart-th">
 				<div class="cart-th1">全部</div>
