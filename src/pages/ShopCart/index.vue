@@ -27,22 +27,37 @@
 					<li class="cart-list-con2">
 						<img :src="cartItem.imgUrl" />
 						<div class="item-msg">
-							{{ cartItem.skuName.substring(0, 60) + '...' }}
+							{{ cartItem.skuName }}
 						</div>
 					</li>
 					<li class="cart-list-con4">
 						<span class="price">{{ cartItem.skuPrice }}</span>
 					</li>
 					<li class="cart-list-con5">
-						<a href="javascript:void(0)" class="mins">-</a>
+						<a
+							href="javascript:void(0)"
+							class="mins"
+							@click="changeCartNum($event, cartItem, -1, true)"
+						>
+							-
+						</a>
 						<input
 							autocomplete="off"
 							type="text"
 							:value="cartItem.skuNum"
 							minnum="1"
 							class="itxt"
+							@change="
+								changeCartNum($event, cartItem, $event.target.value * 1, false)
+							"
 						/>
-						<a href="javascript:void(0)" class="plus">+</a>
+						<a
+							href="javascript:void(0)"
+							class="plus"
+							@click="changeCartNum($event, cartItem, 1, true)"
+						>
+							+
+						</a>
 					</li>
 					<li class="cart-list-con6">
 						<span class="sum">
@@ -91,7 +106,7 @@ import { mapGetters } from 'vuex'
 export default {
 	name: 'ShopCart',
 	mounted() {
-		this.$store.dispatch('getShopCartList')
+		this.getCartList()
 	},
 	computed: {
 		...mapGetters(['cartInfoList']),
@@ -119,10 +134,32 @@ export default {
 		}
 	},
 	methods: {
+		getCartList() {
+			this.$store.dispatch('getShopCartList')
+		},
 		changeIsChecked(id) {
 			this.cartInfoList.forEach(item => {
 				item.id === id && (item.isChecked = item.isChecked ? 0 : 1)
 			})
+		},
+		async changeCartNum(event, cartItem, num, flag) {
+			let skuNum = num
+			if (!flag) {
+				skuNum = num - cartItem.skuNum
+				if (!(num >= 1)) {
+					alert('购物车商品只能为数字且不少于1')
+					event.target.value = cartItem.skuNum
+					return
+				}
+			}
+			let skuInfo = { skuId: cartItem.skuId, skuNum }
+			try {
+				await this.$store.dispatch('getUpdShopCartMsg', skuInfo)
+				alert('修改成功')
+				this.getCartList()
+			} catch (error) {
+				alert(error.message)
+			}
 		}
 	}
 }
