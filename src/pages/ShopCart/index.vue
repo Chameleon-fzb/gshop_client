@@ -155,6 +155,7 @@ export default {
 				}
 
 				.cart-list-con1 {
+					line-height: 82px;
 					width: 10%;
 				}
 
@@ -177,25 +178,27 @@ export default {
 
 				.cart-list-con4 {
 					width: 11%;
+					line-height: 82px;
 				}
 
 				.cart-list-con5 {
 					width: 16%;
+					padding-top: 24.2px;
 
 					.mins {
 						border: 1px solid #ddd;
 						border-right: 0;
 						float: left;
 						color: #666;
-						width: 6px;
+						width: 15px;
 						text-align: center;
-						padding: 8px;
+						padding: 8px 0;
 					}
 
 					input {
 						border: 1px solid #ddd;
 						width: 40px;
-						height: 33.5px;
+						height: 33.6px;
 						float: left;
 						text-align: center;
 						font-size: 14px;
@@ -206,15 +209,19 @@ export default {
 						border-left: 0;
 						float: left;
 						color: #666;
-						width: 6px;
+						width: 15px;
 						text-align: center;
-						padding: 8px;
+						padding: 8px 0;
+					}
+					.mins:hover,
+					.plus:hover {
+						background: #ddd;
 					}
 				}
 
 				.cart-list-con6 {
 					width: 12%;
-
+					line-height: 82px;
 					.sum {
 						font-size: 16px;
 					}
@@ -222,7 +229,7 @@ export default {
 
 				.cart-list-con7 {
 					width: 13%;
-
+					line-height: 41px;
 					a {
 						color: #666;
 					}
@@ -234,9 +241,13 @@ export default {
 	.cart-tool {
 		overflow: hidden;
 		border: 1px solid #ddd;
+		margin-bottom: 10px;
+		& > * {
+			line-height: 32px;
+		}
 
 		.select-all {
-			padding: 10px;
+			padding: 8px;
 			overflow: hidden;
 			float: left;
 
@@ -263,22 +274,25 @@ export default {
 
 		.money-box {
 			float: right;
-
 			.chosed {
-				line-height: 26px;
 				float: left;
 				padding: 0 10px;
+				line-height: 50px;
 			}
 
 			.sumprice {
 				width: 200px;
-				line-height: 22px;
 				float: left;
+				height: 50px;
+				line-height: 50px;
 				padding: 0 10px;
-
+				em {
+					font-size: 14px;
+				}
 				.summoney {
 					color: #c81623;
-					font-size: 16px;
+					font-size: 15px;
+					vertical-align: middle;
 				}
 			}
 
