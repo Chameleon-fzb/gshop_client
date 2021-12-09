@@ -151,7 +151,6 @@ export default {
 
 			& > div {
 				float: left;
-				// caret-color: rgba(0, 0, 0, 0);
 			}
 
 			.cart-th1 {
@@ -189,7 +188,6 @@ export default {
 
 				& > li {
 					float: left;
-					// caret-color: rgba(0, 0, 0, 0);
 				}
 
 				.cart-list-con1 {
@@ -240,7 +238,6 @@ export default {
 						float: left;
 						text-align: center;
 						font-size: 14px;
-						caret-color: rgb(0, 0, 0);
 					}
 
 					.plus {

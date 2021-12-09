@@ -141,3 +141,22 @@ html {
 	clear: both;
 	visibility: hidden;
 }
+
+/* 清除文本标签 获取焦点 的竖线 */
+div,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+li,
+span,
+p,
+ul,
+ol {
+	caret-color: transparent;
+}
+input {
+	caret-color: auto;
+}
