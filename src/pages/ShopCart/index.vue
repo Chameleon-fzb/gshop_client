@@ -21,7 +21,7 @@
 							type="checkbox"
 							name="chk_list"
 							:checked="cartItem.isChecked"
-							@click="changeIsChecked(cartItem.id)"
+							@click="changeIsChecked(cartItem)"
 						/>
 					</li>
 					<li class="cart-list-con2">
@@ -118,12 +118,21 @@ export default {
 		},
 		isAllChecked: {
 			get() {
-				return this.isCheckList.length === this.cartInfoList.length ? 1 : 0
+				return this.isCheckList.length === this.cartInfoList.length &&
+					this.cartInfoList.length > 0
+					? 1
+					: 0
 			},
-			set(newValue) {
-				this.cartInfoList.forEach(item => {
-					item.isChecked = newValue ? 1 : 0
-				})
+			async set(newValue) {
+				try {
+					await this.$store.dispatch('updateAllCartCheck', newValue ? 1 : 0)
+					this.getCartList()
+					// this.cartInfoList.forEach(item => {
+					// 	item.isChecked = newValue ? 1 : 0
+					// })
+				} catch (error) {
+					alert(error.message)
+				}
 			}
 		},
 		TotalPrice() {
@@ -137,10 +146,20 @@ export default {
 		getCartList() {
 			this.$store.dispatch('getShopCartList')
 		},
-		changeIsChecked(id) {
-			this.cartInfoList.forEach(item => {
-				item.id === id && (item.isChecked = item.isChecked ? 0 : 1)
-			})
+		async changeIsChecked(cartItem) {
+			let { skuId, isChecked } = cartItem
+			try {
+				await this.$store.dispatch('updateCartCheck', {
+					skuId,
+					isChecked: isChecked ? 0 : 1
+				})
+				// this.cartInfoList.forEach(item => {
+				// 	item.skuId === skuId && (item.isChecked = item.isChecked ? 0 : 1)
+				// })
+				this.getCartList()
+			} catch (error) {
+				alert(error.message)
+			}
 		},
 		async changeCartNum(event, cartItem, num, flag) {
 			let skuNum = num
