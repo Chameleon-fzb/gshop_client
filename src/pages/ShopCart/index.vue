@@ -121,12 +121,15 @@ export default {
 	},
 	computed: {
 		...mapGetters(['cartInfoList']),
+		/**选中的购物车商品列表*/
 		isCheckList() {
 			return this.cartInfoList.filter(item => item.isChecked)
 		},
+		/**选中的数量*/
 		isCheckNum() {
 			return this.isCheckList.reduce((prev, item) => (prev += item.skuNum), 0)
 		},
+		/**总是否全选*/
 		isAllChecked: {
 			get() {
 				return this.isCheckList.length === this.cartInfoList.length &&
@@ -146,6 +149,7 @@ export default {
 				}
 			}
 		},
+		/**总价格*/
 		TotalPrice() {
 			return this.isCheckList.reduce(
 				(prevValue, item) => prevValue + item.skuNum * item.skuPrice,

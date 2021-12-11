@@ -16,7 +16,7 @@ const mutations = {
 const actions = {
 	/**
 	 * 获取更新购物车数量信息
-	 */
+	 **/
 	async getUpdShopCartMsg(_, { skuId, skuNum }) {
 		const result = await reqAddOrUpdShopCart(skuId, skuNum)
 		if (result.code === 200) return 'ok'
@@ -60,7 +60,9 @@ const actions = {
 		})
 		return Promise.all(promiseArr)
 	},
-	/*  */
+	/**
+	 * 删除选中购物车商品
+	 **/
 	async deleteCheckedCart({ dispatch, getters }) {
 		let promiseList = []
 		getters.cartInfoList.forEach(item => {
