@@ -35,7 +35,7 @@
 					</li>
 					<li class="cart-list-con5">
 						<a
-							href="javascript:void(0)"
+							href="javascript:;"
 							class="mins"
 							@click="changeCartNum($event, cartItem, -1, true)"
 						>
@@ -52,7 +52,7 @@
 							"
 						/>
 						<a
-							href="javascript:void(0)"
+							href="javascript:;"
 							class="plus"
 							@click="changeCartNum($event, cartItem, 1, true)"
 						>
@@ -65,21 +65,32 @@
 						</span>
 					</li>
 					<li class="cart-list-con7">
-						<a href="#none" class="sindelet">删除</a>
+						<a
+							href="javascript:;"
+							class="sindelet"
+							@click="deleteCart(cartItem.skuId)"
+						>
+							删除
+						</a>
 						<br />
-						<a href="#none">移到收藏</a>
+						<a href="javascript:;">移到收藏</a>
 					</li>
 				</ul>
 			</div>
 		</div>
 		<div class="cart-tool">
 			<div class="select-all">
-				<input class="chooseAll" type="checkbox" v-model="isAllChecked" />
+				<input
+					class="chooseAll"
+					type="checkbox"
+					v-model="isAllChecked"
+					:disabled="cartInfoList.length <= 0"
+				/>
 				<!-- @click="changeIsAllCheck" -->
 				<span>全选</span>
 			</div>
 			<div class="option">
-				<a href="#none">删除选中的商品</a>
+				<a href="javascript:;" @click="deleteCheckedCart">删除选中的商品</a>
 				<a href="#none">移到我的关注</a>
 				<a href="#none">清除下柜商品</a>
 			</div>
@@ -143,9 +154,11 @@ export default {
 		}
 	},
 	methods: {
+		/**重新获取购物车数据 */
 		getCartList() {
 			this.$store.dispatch('getShopCartList')
 		},
+		/**改变商品isChecked属性 */
 		async changeIsChecked(cartItem) {
 			let { skuId, isChecked } = cartItem
 			try {
@@ -161,6 +174,7 @@ export default {
 				alert(error.message)
 			}
 		},
+		/**修改购物车商品数量 */
 		async changeCartNum(event, cartItem, num, flag) {
 			let skuNum = num
 			if (!flag) {
@@ -176,6 +190,24 @@ export default {
 				await this.$store.dispatch('getUpdShopCartMsg', skuInfo)
 				alert('修改成功')
 				this.getCartList()
+			} catch (error) {
+				alert(error.message)
+			}
+		},
+		/**删除单个商品 */
+		async deleteCart(skuId) {
+			try {
+				await this.$store.dispatch('deleteCart', skuId)
+				this.getCartList()
+			} catch (error) {
+				alert(error.message)
+			}
+		},
+		/**删除选中的商品 */
+		async deleteCheckedCart() {
+			try {
+				await this.$store.dispatch('deleteCheckedCart')
+				this.getCartList
 			} catch (error) {
 				alert(error.message)
 			}

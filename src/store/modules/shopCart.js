@@ -59,6 +59,16 @@ const actions = {
 			promiseArr.push(promise)
 		})
 		return Promise.all(promiseArr)
+	},
+	/*  */
+	async deleteCheckedCart({ dispatch, getters }) {
+		let promiseList = []
+		getters.cartInfoList.forEach(item => {
+			if (item.isChecked === 1) {
+				let promise = dispatch('deleteCart', item.skuId)
+				promiseList.push(promise)
+			}
+		})
 	}
 }
 const getters = {

@@ -58,7 +58,7 @@ export const reqAddOrUpdShopCart = (skuId, skuNum) =>
 export const reqShopCart = () =>
 	ajax({
 		url: '/cart/cartList',
-		methods: 'GET'
+		method: 'GET'
 	})
 /**
  * 修改选中状态
@@ -66,7 +66,7 @@ export const reqShopCart = () =>
 export const reqUpdCartCheck = (skuId, isChecked) =>
 	ajax({
 		url: `/cart/checkCart/${skuId}/${isChecked}`,
-		methods: 'GET'
+		method: 'GET'
 	})
 /**
  * 删除商品
@@ -74,5 +74,5 @@ export const reqUpdCartCheck = (skuId, isChecked) =>
 export const reqDeleteCart = skuId =>
 	ajax({
 		url: `/cart/deleteCart/${skuId}`,
-		methods: 'DELETE'
+		method: 'DELETE'
 	})
