@@ -3,6 +3,10 @@
 // 再调用uuid创建新的标识 还要存在localStorage
 
 import { v4 as uuidV4 } from 'uuid'
+
+let TOKEN_KEY = 'TOKEN_KEY'
+
+/**从 localStorage 获取 临时 id*/
 function getUserTempId() {
 	let userTempId = localStorage.getItem('USER_TEMP_ID_KEY')
 	if (!userTempId) {
@@ -11,4 +15,18 @@ function getUserTempId() {
 	}
 	return userTempId
 }
-export { getUserTempId }
+/**保存 token 到 localStorage */
+function setToken(token) {
+	if (!token) return
+	localStorage.setItem(TOKEN_KEY, token)
+}
+/**从 localStorage 获取 token */
+function getToken() {
+	let token = localStorage.getItem(TOKEN_KEY) || ''
+	return token
+}
+/* 删除 token */
+function removeToken() {
+	localStorage.removeItem(TOKEN_KEY)
+}
+export { getUserTempId, setToken, getToken, removeToken }
