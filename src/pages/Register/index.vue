@@ -12,36 +12,40 @@
 			</h3>
 			<div class="content">
 				<label>手机号:</label>
-				<input type="text" placeholder="请输入你的手机号" />
+				<input
+					type="text"
+					placeholder="请输入你的手机号"
+					v-model="userInfo.phone"
+				/>
 				<span class="error-msg">错误提示信息</span>
 			</div>
 			<div class="content">
 				<label>验证码:</label>
-				<input type="text" placeholder="请输入验证码" />
-				<!-- <img
-					ref="code"
-					src="http://39.98.123.211/api/user/passport/code"
-					alt="code"
-				/> -->
+				<input type="text" placeholder="请输入验证码" v-model="userInfo.code" />
+				<button @click="getCode">获取验证码</button>
 				<span class="error-msg">错误提示信息</span>
 			</div>
 			<div class="content">
 				<label>登录密码:</label>
-				<input type="text" placeholder="请输入你的登录密码" />
+				<input
+					type="text"
+					placeholder="请输入你的登录密码"
+					v-model="userInfo.password"
+				/>
 				<span class="error-msg">错误提示信息</span>
 			</div>
 			<div class="content">
 				<label>确认密码:</label>
-				<input type="text" placeholder="请输入确认密码" />
+				<input type="text" placeholder="请输入确认密码" v-model="password2" />
 				<span class="error-msg">错误提示信息</span>
 			</div>
 			<div class="controls">
-				<input name="m1" type="checkbox" />
+				<input name="m1" type="checkbox" v-model="isChecked" />
 				<span>同意协议并注册《尚品汇用户协议》</span>
 				<span class="error-msg">错误提示信息</span>
 			</div>
 			<div class="btn">
-				<button>完成注册</button>
+				<button @click="register">完成注册</button>
 			</div>
 		</div>
 
@@ -64,8 +68,54 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
 export default {
-	name: 'Register'
+	name: 'Register',
+	data() {
+		return {
+			userInfo: {
+				phone: '',
+				password: '',
+				code: ''
+			},
+			password2: '',
+			isChecked: false
+		}
+	},
+	computed: {
+		...mapState({ securityCode: state => state.user.securityCode })
+	},
+	watch: {
+		securityCode: {
+			handler(newValue) {
+				this.userInfo.code = newValue
+			}
+		}
+	},
+	methods: {
+		// 获取验证码
+		getCode() {
+			this.$store.dispatch('getSecurityCode', this.userInfo.phone)
+		},
+		async register() {
+			// 获取用户信息
+			const {
+				userInfo: { phone, password, code },
+				password2,
+				isChecked
+			} = this
+			// 发请求注册
+			if (!(phone && password && code && password2 && isChecked)) return
+			if (password != password2) return
+			try {
+				await this.$store.dispatch('userRegister', this.userInfo)
+				alert('注册成功')
+				this.$router.push('/login')
+			} catch (error) {
+				alert(error.message)
+			}
+		}
+	}
 }
 </script>
 
@@ -122,8 +172,11 @@ export default {
 				border: 1px solid #999;
 			}
 
-			img {
-				vertical-align: sub;
+			// img {
+			// 	vertical-align: sub;
+			// }
+			button {
+				height: 36px;
 			}
 
 			.error-msg {

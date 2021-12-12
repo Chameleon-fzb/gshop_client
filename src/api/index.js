@@ -76,3 +76,23 @@ export const reqDeleteCart = skuId =>
 		url: `/cart/deleteCart/${skuId}`,
 		method: 'DELETE'
 	})
+/**注册 */
+export const reqRegister = userInfo =>
+	ajax({
+		url: `/user/passport/register`,
+		method: 'POST',
+		data: userInfo
+	})
+/**获取验证码 */
+export const reqSecurityCode = phone =>
+	ajax({
+		url: `/user/passport/sendCode/${phone}`,
+		method: 'GET'
+	})
+/**注册 */
+export const reqLogin = userInfo =>
+	ajax({
+		url: '/user/passport/login',
+		method: 'POST',
+		data: userInfo
+	})
