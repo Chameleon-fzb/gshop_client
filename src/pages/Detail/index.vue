@@ -625,8 +625,8 @@ export default {
 							.mins {
 								width: 15px;
 								text-align: center;
-								height: 17px;
-								line-height: 17px;
+								height: 18px;
+								line-height: 18px;
 								background: #f1f1f1;
 								color: #666;
 								position: absolute;
@@ -635,13 +635,13 @@ export default {
 							}
 
 							.mins {
-								right: -8px;
-								top: 19px;
+								right: -6px;
+								top: 18px;
 								border-top: 0;
 							}
 
 							.plus {
-								right: -8px;
+								right: -6px;
 							}
 						}
 
