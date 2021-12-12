@@ -184,15 +184,19 @@ export default {
 			if (!flag) {
 				skuNum = num - cartItem.skuNum
 				if (!(num >= 1)) {
-					alert('购物车商品只能为数字且不少于1')
+					alert('购物车商品只能为数字且不小于1')
 					event.target.value = cartItem.skuNum
 					return
 				}
 			}
+			if (skuNum + cartItem.skuNum < 1) {
+				alert('购物车商品不能小于1')
+				event.target.value = cartItem.skuNum
+				return
+			}
 			let skuInfo = { skuId: cartItem.skuId, skuNum }
 			try {
 				await this.$store.dispatch('getUpdShopCartMsg', skuInfo)
-				alert('修改成功')
 				this.getCartList()
 			} catch (error) {
 				alert(error.message)
