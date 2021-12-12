@@ -6,7 +6,8 @@
 				注册新用户
 				<span class="go">
 					我有账号，去
-					<a href="login.html" target="_blank">登陆</a>
+					<router-link to="/login">登陆</router-link>
+					<!-- <a href="login.html" target="_blank">登陆</a> -->
 				</span>
 			</h3>
 			<div class="content">
@@ -17,11 +18,11 @@
 			<div class="content">
 				<label>验证码:</label>
 				<input type="text" placeholder="请输入验证码" />
-				<img
+				<!-- <img
 					ref="code"
-					src="http://182.92.128.115/api/user/passport/code"
+					src="http://39.98.123.211/api/user/passport/code"
 					alt="code"
-				/>
+				/> -->
 				<span class="error-msg">错误提示信息</span>
 			</div>
 			<div class="content">
@@ -138,6 +139,9 @@ export default {
 			position: relative;
 
 			input {
+				vertical-align: middle;
+			}
+			span {
 				vertical-align: middle;
 			}
 
