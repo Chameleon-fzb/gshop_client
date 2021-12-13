@@ -8,7 +8,7 @@
 					<p>尚品汇欢迎您!</p>
 					<p v-if="$store.state.user.userInfo">
 						<a to="/login">{{ $store.state.user.userInfo.name }}</a>
-						<a to="/register" class="register">退出登录</a>
+						<a to="/register" class="register" @click="logout">退出登录</a>
 					</p>
 					<p v-else>
 						<span>请</span>
@@ -91,6 +91,14 @@ export default {
 				? this.$router.push(location)
 				: this.$router.replace(location)
 			// this.$router.push(location)
+		},
+		async logout() {
+			try {
+				await this.$store.dispatch('userLogout')
+				this.$router.push('/')
+			} catch (error) {
+				alert(error.message)
+			}
 		}
 	},
 	mounted() {

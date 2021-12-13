@@ -97,7 +97,7 @@ router.beforeEach(async (to, _, next) => {
 			next()
 		} catch (error) {
 			alert('用户的token过期')
-			store.dispatch('resetUserInfo')
+			store.dispatch('userLogout')
 			// 去到用户之前想要去的页面
 			next('/login?redirect=' + to.path)
 		}
