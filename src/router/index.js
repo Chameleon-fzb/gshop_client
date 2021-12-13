@@ -82,26 +82,25 @@ router.beforeEach(async (to, _, next) => {
 		next()
 		return
 	}
-
+	/** 2 登录过并进入登录界面拦截*/
+	if (to.path === '/login') {
+		next('/')
+	}
 	let hasUserInfo = !!store.state.user.userInfo
-	/** 2 已经获取了用户信息  */
+	/** 3 已经获取了用户信息  */
 	if (hasUserInfo) {
 		next()
 	} else {
-		/** 3 没有获取用户信息  */
+		/** 4 没有获取用户信息  */
 		try {
 			await store.dispatch('getUserInfo')
 			next()
 		} catch (error) {
 			alert('用户的token过期')
 			store.dispatch('resetUserInfo')
-			next('/login')
+			// 去到用户之前想要去的页面
+			next('/login?redirect=' + to.path)
 		}
 	}
-	/** 4 登录过并进入登录界面拦截*/
-	if (to.path === '/login') {
-		next('/')
-	}
-	return
 })
 export default router

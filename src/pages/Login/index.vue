@@ -92,7 +92,8 @@ export default {
 			try {
 				await this.$store.dispatch('userLogin', this.userInfo)
 				alert('登录成功')
-				this.$router.push('/')
+				let redirect = this.$route.query.redirect || '/'
+				this.$router.push(redirect)
 			} catch (error) {
 				console.log(error.message)
 			}
