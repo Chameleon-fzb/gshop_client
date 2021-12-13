@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import routes from './routes'
+import store from '@/store'
 Vue.use(VueRouter)
 /*
  * 声明式导航 默认传了 一个成功的 promise
@@ -65,7 +66,7 @@ VueRouter.prototype.replace = function(location, onResolve, onReject) {
 		return Promise.reject(err)
 	})
 }
-export default new VueRouter({
+const router = new VueRouter({
 	mode: 'history',
 	routes,
 	//滚动行为默认为最顶部
@@ -73,3 +74,34 @@ export default new VueRouter({
 		return { x: 0, y: 0 }
 	}
 })
+
+router.beforeEach(async (to, _, next) => {
+	let token = store.state.user.token
+	/** 1 没有登录*/
+	if (!token) {
+		next()
+		return
+	}
+
+	let hasUserInfo = !!store.state.user.userInfo
+	/** 2 已经获取了用户信息  */
+	if (hasUserInfo) {
+		next()
+	} else {
+		/** 3 没有获取用户信息  */
+		try {
+			await store.dispatch('getUserInfo')
+			next()
+		} catch (error) {
+			alert('用户的token过期')
+			store.dispatch('resetUserInfo')
+			next('/login')
+		}
+	}
+	/** 4 登录过并进入登录界面拦截*/
+	if (to.path === '/login') {
+		next('/')
+	}
+	return
+})
+export default router
