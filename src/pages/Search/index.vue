@@ -140,7 +140,7 @@
 						:currentPage="searchParams.pageNo"
 						:total="total"
 						:pageSize="searchParams.pageSize"
-						:showPageNo="5"
+						:showPageNo="3"
 						@currentChange="getShopList"
 					/>
 				</div>

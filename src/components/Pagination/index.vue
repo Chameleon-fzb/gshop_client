@@ -67,7 +67,7 @@ export default {
 		// 最大连续页码数
 		showPageNo: {
 			type: Number,
-			default: 5,
+			default: 3,
 			// 传入的值为奇数
 			validator: function(value) {
 				return value % 2 === 1
