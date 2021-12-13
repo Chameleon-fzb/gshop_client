@@ -6,7 +6,11 @@
 				<!-- 头部的第一行 登录 -->
 				<div class="loginList">
 					<p>尚品汇欢迎您!</p>
-					<p>
+					<p v-if="$store.state.user.userInfo">
+						<a to="/login">{{ $store.state.user.userInfo.name }}</a>
+						<a to="/register" class="register">退出登录</a>
+					</p>
+					<p v-else>
 						<span>请</span>
 						<router-link to="/login">登录</router-link>
 						<router-link to="/register" class="register">免费注册</router-link>
