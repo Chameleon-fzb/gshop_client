@@ -114,3 +114,9 @@ export const reqTradeInfo = () =>
 		url: '/order/auth/trade',
 		method: 'GET'
 	})
+/**获取地址信息  */
+export const reqUserAddressList = () =>
+	ajax({
+		url: 'user/userAddress/auth/findUserAddressList',
+		method: 'GET'
+	})
