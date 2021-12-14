@@ -1,4 +1,4 @@
-import { reqTradeInfo, reqUserAddressList } from '@/api'
+import { reqTradeInfo, reqUserAddressList, reqSubmitOrder } from '@/api'
 const state = {
 	tradeInfo: {},
 	userAddressList: []
@@ -9,6 +9,9 @@ const mutations = {
 	},
 	RECEIVE_ADDRESS_LIST(state, userAddressList) {
 		state.userAddressList = userAddressList
+	},
+	RECEIVE_ORDER_NO(state, orderNo) {
+		state.orderNo = orderNo
 	}
 }
 const actions = {
@@ -19,11 +22,17 @@ const actions = {
 	async getUserAddressList({ commit }) {
 		const result = await reqUserAddressList()
 		result.code === 200 && commit('RECEIVE_ADDRESS_LIST', result.data)
+	},
+	async submitOrder({ commit }, { tradeNo, tradeData }) {
+		const result = await reqSubmitOrder(tradeNo, tradeData)
+		if (result.code === 200) {
+			commit('RECEIVE_ORDER_NO', result.data)
+			return 'ok'
+		} else return Promise.reject(new Error(result.message))
 	}
 }
 const getters = {
-	detailArrayList: state => state.tradeInfo.detailArrayList || [],
-	userAddressList: state => state.tradeInfo.userAddressList || []
+	detailArrayList: state => state.tradeInfo.detailArrayList || []
 }
 export default {
 	state,

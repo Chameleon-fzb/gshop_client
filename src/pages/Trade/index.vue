@@ -80,7 +80,7 @@
 						<i>{{ tradeInfo.totalNum }}</i>
 						件商品，总商品金额
 					</b>
-					<span>¥{{ tradeInfo.totalAmount }}</span>
+					<span>¥{{ tradeInfo.originalTotalAmount }}</span>
 				</li>
 				<li>
 					<b>返现：</b>
@@ -95,7 +95,7 @@
 		<div class="trade">
 			<div class="price">
 				应付金额:
-				<span>¥{{ tradeInfo.totalAmount }}</span>
+				<span>¥{{ tradeInfo.originalTotalAmount }}</span>
 			</div>
 			<div class="receiveInfo">
 				寄送至：
@@ -107,7 +107,8 @@
 			</div>
 		</div>
 		<div class="sub clearFix">
-			<router-link class="subBtn" to="/pay">提交订单</router-link>
+			<!-- <router-link class="subBtn" to="/pay">提交订单</router-link> -->
+			<a href="javascript:;" class="subBtn" @click="submitOrder">提交订单</a>
 		</div>
 	</div>
 </template>
@@ -132,6 +133,33 @@ export default {
 				item.isDefault = '0'
 			})
 			this.userAddressList[index].isDefault = '1'
+		},
+		/**提交订单 */
+		async submitOrder() {
+			const {
+				tradeInfo: { tradeNo },
+				userAddressList: {
+					consignee,
+					phoneNum: consigneeTel,
+					userAddress: deliveryAddress
+				},
+				message: orderComment,
+				detailArrayList: orderDetailList
+			} = this
+			const tradeData = {
+				consignee,
+				consigneeTel,
+				deliveryAddress,
+				paymentWay: 'ONLINE',
+				orderComment,
+				orderDetailList
+			}
+			try {
+				await this.$store.dispatch('submitOrder', { tradeNo, tradeData })
+				this.$router.push('/pay')
+			} catch (error) {
+				alert('提交失败：' + error.message)
+			}
 		}
 	},
 
@@ -143,7 +171,7 @@ export default {
 
 		...mapGetters(['detailArrayList']),
 		address() {
-			return this.userAddressList.filter(item => item.isDefault === '1')[0]
+			return this.userAddressList.find(item => item.isDefault === '1') || {}
 		}
 	}
 }
