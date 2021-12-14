@@ -65,7 +65,10 @@ const actions = {
 	/*获取用户信息  */
 	async getUserInfo({ commit }) {
 		const result = await reqUserInfo()
-		result.code === 200 && commit('RECEIVE_USER_INFO', result.data)
+		if (result.code === 200) {
+			commit('RECEIVE_USER_INFO', result.data)
+			return 'ok'
+		} else return Promise.reject(new Error(result.message))
 	},
 	/**重设用户信息 */
 	async resetUserInfo({ commit }) {
