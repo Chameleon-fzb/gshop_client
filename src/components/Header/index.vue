@@ -7,8 +7,8 @@
 				<div class="loginList">
 					<p>尚品汇欢迎您!</p>
 					<p v-if="$store.state.user.userInfo">
-						<a to="/login">{{ $store.state.user.userInfo.name }}</a>
-						<a to="/register" class="register" @click="logout">退出登录</a>
+						<a href="javascript:;">{{ $store.state.user.userInfo.name }}</a>
+						<a href="javascript:;" class="register" @click="logout">退出登录</a>
 					</p>
 					<p v-else>
 						<span>请</span>
