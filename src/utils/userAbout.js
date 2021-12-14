@@ -22,7 +22,7 @@ function setToken(token) {
 }
 /**从 localStorage 获取 token */
 function getToken() {
-	let token = localStorage.getItem(TOKEN_KEY) || ''
+	let token = localStorage.getItem(TOKEN_KEY)
 	return token
 }
 /* 删除 token */
