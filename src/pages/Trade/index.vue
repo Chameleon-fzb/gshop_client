@@ -3,24 +3,21 @@
 		<h3 class="title">填写并核对订单信息</h3>
 		<div class="content">
 			<h5 class="receive">收件人信息</h5>
-			<div class="address clearFix">
-				<span class="username selected">张三</span>
-				<p>
-					<span class="s1">北京市昌平区宏福科技园综合楼6层</span>
-					<span class="s2">15010658793</span>
-					<span class="s3">默认地址</span>
-				</p>
-			</div>
 			<div
 				class="address clearFix"
-				v-for="userAddress in userAddressList"
+				v-for="(userAddress, index) in userAddressList"
 				:key="userAddress.id"
 			>
-				<span class="username selected">{{ userAddress.consignee }}</span>
-				<p>
+				<span
+					class="username "
+					:class="{ selected: userAddress.isDefault === '1' }"
+				>
+					{{ userAddress.consignee }}
+				</span>
+				<p @click="changeDefaultAddress(index)">
 					<span class="s1">{{ userAddress.userAddress }}</span>
-					<span class="s2">{{ phoneNum }}</span>
-					<span class="s3">默认地址</span>
+					<span class="s2">{{ userAddress.phoneNum }}</span>
+					<span class="s3" v-if="userAddress.isDefault === '1'">默认地址</span>
 				</p>
 			</div>
 			<div class="line"></div>
@@ -101,11 +98,12 @@
 				<span>¥{{ tradeInfo.totalAmount }}</span>
 			</div>
 			<div class="receiveInfo">
-				寄送至:
-				<span>北京市昌平区宏福科技园综合楼6层</span>
+				寄送至：
+				<span>{{ address.userAddress }}</span>
 				收货人：
-				<span>张三</span>
-				<span>15010658793</span>
+				<span>{{ address.consignee }}</span>
+				电话：
+				<span>{{ address.phoneNum }}</span>
 			</div>
 		</div>
 		<div class="sub clearFix">
@@ -124,12 +122,29 @@ export default {
 		}
 	},
 	mounted() {
+		this.$store.dispatch('getUserAddressList')
 		this.$store.dispatch('getTradeInfo')
 	},
-	computed: {
-		...mapState({ tradeInfo: state => state.trade.tradeInfo || {} }),
+	methods: {
+		/**修改默认地址 */
+		changeDefaultAddress(index) {
+			this.userAddressList.forEach(item => {
+				item.isDefault = '0'
+			})
+			this.userAddressList[index].isDefault = '1'
+		}
+	},
 
-		...mapGetters(['detailArrayList', 'userAddressList'])
+	computed: {
+		...mapState({
+			tradeInfo: state => state.trade.tradeInfo || {},
+			userAddressList: state => state.trade.userAddressList
+		}),
+
+		...mapGetters(['detailArrayList']),
+		address() {
+			return this.userAddressList.filter(item => item.isDefault === '1')[0]
+		}
 	}
 }
 </script>
