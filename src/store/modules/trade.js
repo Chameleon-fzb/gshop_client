@@ -9,9 +9,6 @@ const mutations = {
 	},
 	RECEIVE_ADDRESS_LIST(state, userAddressList) {
 		state.userAddressList = userAddressList
-	},
-	RECEIVE_ORDER_NO(state, orderNo) {
-		state.orderNo = orderNo
 	}
 }
 const actions = {
@@ -23,12 +20,10 @@ const actions = {
 		const result = await reqUserAddressList()
 		result.code === 200 && commit('RECEIVE_ADDRESS_LIST', result.data)
 	},
-	async submitOrder({ commit }, { tradeNo, tradeData }) {
+	async submitOrder(_, { tradeNo, tradeData }) {
 		const result = await reqSubmitOrder(tradeNo, tradeData)
-		if (result.code === 200) {
-			commit('RECEIVE_ORDER_NO', result.data)
-			return 'ok'
-		} else return Promise.reject(new Error(result.message))
+		if (result.code === 200) return result.data
+		else return Promise.reject(new Error(result.message))
 	}
 }
 const getters = {
