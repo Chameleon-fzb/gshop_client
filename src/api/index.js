@@ -127,3 +127,9 @@ export const reqSubmitOrder = (tradeNo, tradeData) =>
 		method: 'POST',
 		data: tradeData
 	})
+/*获取订单信息 */
+export const reqPayInfo = orderId =>
+	ajax({
+		url: `/payment/weixin/createNative/${orderId}`,
+		method: 'GET'
+	})

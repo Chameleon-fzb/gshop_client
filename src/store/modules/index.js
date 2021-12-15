@@ -4,6 +4,7 @@ import user from './user'
 import detail from './detail'
 import shopCart from './shopCart'
 import trade from './trade'
+import pay from './pay'
 
 export default {
 	home,
@@ -11,5 +12,6 @@ export default {
 	user,
 	detail,
 	shopCart,
-	trade
+	trade,
+	pay
 }
