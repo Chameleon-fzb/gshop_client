@@ -6,6 +6,7 @@ import Pagination from './components/Pagination'
 import store from './store'
 
 import './plugins/swiper'
+import './plugins/element'
 import './mock/mockServer'
 
 Vue.config.productionTip = false

@@ -52,7 +52,7 @@ const actions = {
 	/**获取验证码*/
 	async getSecurityCode({ commit }, phone) {
 		const result = await reqSecurityCode(phone)
-		result.code === 200 && commit('RECEIVE_SECURITY_CODE', result.data.token)
+		result.code === 200 && commit('RECEIVE_SECURITY_CODE', result.data)
 	},
 	/**用户登录 */
 	async userLogin({ commit }, userInfo) {

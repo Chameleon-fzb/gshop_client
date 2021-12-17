@@ -80,7 +80,7 @@
 				<div class="hr"></div>
 
 				<div class="submit">
-					<router-link class="btn" to="/paysuccess">立即支付</router-link>
+					<a href="javascript:;" class="btn" @click="pay">立即支付</a>
 				</div>
 				<div class="otherpay">
 					<div class="step-tit">
@@ -98,21 +98,79 @@
 
 <script>
 import { mapState } from 'vuex'
+import QRCode from 'qrcode'
 export default {
 	name: 'Pay',
 	data() {
 		return {
-			orderNo: ''
+			orderNo: '',
+			timer: null,
+			payStatus: 0
 		}
 	},
-	beforeMount() {
+	created() {
 		this.orderNo = this.$route.query.orderNo
 	},
-	mounted() {
+	beforeMount() {
 		this.$store.dispatch('getPayInfo', this.orderNo)
 	},
 	computed: {
 		...mapState({ payInfo: state => state.pay.payInfo })
+	},
+	methods: {
+		async pay() {
+			try {
+				const imgUrl = await QRCode.toDataURL(this.payInfo.codeUrl)
+
+				this.$alert(`<img src="${imgUrl}">`, '请使用微信支付', {
+					dangerouslyUseHTMLString: true,
+					center: true,
+					showClose: false,
+					lockScroll: false,
+					showCancelButton: true,
+					cancelButtonText: '支付遇到问题',
+					confirmButtonText: '我已经成功支付',
+					beforeClose: (action, instance, done) => {
+						if (action === 'confirm') {
+							// this.payStatus != 200 &&
+							// 	this.$message.error('请确保支付成功，成功会自动跳转')
+							// 后门
+							clearInterval(this.timer)
+							this.timer = null
+							done()
+							this.$router.push('/paySuccess')
+						} else if (action === 'cancel') {
+							this.$message.info('请联系客服')
+							clearInterval(this.timer)
+							this.timer = null
+							done()
+						}
+					}
+				}).catch(() => {})
+				if (!this.timer) {
+					this.timer = setInterval(async () => {
+						try {
+							await this.$store.dispatch('getPayStatus', this.orderNo)
+
+							// 1 清除定时器
+							clearInterval(this.timer)
+							this.timer = null
+							// 2 关闭弹消息框
+							this.$msgbox.close()
+							// 3 存储支付成功的状态
+							this.payStatus = 200
+							// 4 跳转页面
+							this.$router.push('/paySuccess')
+						} catch (error) {
+							// this.$router.push('/paySuccess')
+							console.log(error.message)
+						}
+					}, 2000)
+				}
+			} catch (err) {
+				console.error('二维码生成失败')
+			}
+		}
 	}
 }
 </script>
