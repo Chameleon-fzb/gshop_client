@@ -352,11 +352,27 @@ export default {
 		}
 
 		// 分页
-		.choose-order {
+		/deep/ .choose-order {
 			text-align: center;
+			// ::v-deep {
+			.el-pagination.is-background .el-pager li:not(.disabled).active {
+				background-color: #e1251b;
+				color: #fff;
+			}
+
+			.el-pagination.is-background .el-pager li:not(.disabled).active:hover {
+				background-color: #e1251b;
+				color: #fff;
+			}
+			.el-pagination.is-background .el-pager li:hover {
+				color: #e1251b;
+			}
+			.el-pagination.is-background .el-pager li:not(.disabled):hover {
+				color: #e1251b;
+			}
+			// }
 		}
 	}
-
 	// 猜你喜欢
 	.like {
 		border: 1px solid #ddd;
@@ -405,23 +421,5 @@ export default {
 			}
 		}
 	}
-}
-</style>
-
-<style lang="less">
-.el-pagination.is-background .el-pager li:not(.disabled).active {
-	background-color: #e1251b;
-	color: #fff;
-}
-
-.el-pagination.is-background .el-pager li:not(.disabled).active:hover {
-	background-color: #e1251b;
-	color: #fff;
-}
-.el-pagination.is-background .el-pager li:hover {
-	color: #e1251b;
-}
-.el-pagination.is-background .el-pager li:not(.disabled):hover {
-	color: #e1251b;
 }
 </style>
