@@ -19,12 +19,12 @@
 				</table>
 			</div>
 			<div class="orders">
-				<table class="order-item">
+				<table class="order-item" v-for="record in recordList" :key="record.id">
 					<thead>
 						<tr>
 							<th colspan="5">
 								<span class="ordertitle">
-									2017-02-11 11:59 订单编号: 7867473872181848
+									{{ record.createTime }} 订单编号: {{ record.outTradeNo }}
 									<span class="pull-right delete">
 										<img src="../images/delete.png" />
 									</span>
@@ -33,135 +33,83 @@
 						</tr>
 					</thead>
 					<tbody>
-						<tr>
+						<tr
+							v-for="(orderGoodsItem, index) in record.orderDetailList"
+							:key="orderGoodsItem.id"
+						>
 							<td width="60%">
 								<div class="typographic">
-									<img src="../images/goods.png" />
+									<img
+										:src="orderGoodsItem.imgUrl"
+										width="80px"
+										height="80px"
+									/>
 									<a href="#" class="block-text">
-										包邮 正品玛姬儿压缩面膜无纺布纸膜100粒 送泡瓶面膜刷喷瓶 新款
+										{{ orderGoodsItem.skuName }}
 									</a>
-									<span>x1</span>
+									<span>×{{ orderGoodsItem.skuNum }}</span>
 									<a href="#" class="service">售后申请</a>
 								</div>
 							</td>
-							<td rowspan="2" width="8%" class="center">小丽</td>
-							<td rowspan="2" width="13%" class="center">
-								<ul class="unstyled">
-									<li>总金额¥138.00</li>
-									<li>在线支付</li>
-								</ul>
-							</td>
-							<td rowspan="2" width="8%" class="center">
-								<a href="#" class="btn">已完成</a>
-							</td>
-							<td rowspan="2" width="13%" class="center">
-								<ul class="unstyled">
-									<li>
-										<a href="mycomment.html" target="_blank">评价|晒单</a>
-									</li>
-								</ul>
-							</td>
-						</tr>
-						<tr>
-							<td width="50%">
-								<div class="typographic">
-									<img src="../images/goods.png" />
-									<a href="#" class="block-text">
-										包邮 正品玛姬儿压缩面膜无纺布纸膜100粒 送泡瓶面膜刷喷瓶 新款
-									</a>
-									<span>x1</span>
-									<a href="#" class="service">售后申请</a>
-								</div>
-							</td>
-						</tr>
-					</tbody>
-				</table>
-
-				<table class="order-item">
-					<thead>
-						<tr>
-							<th colspan="5">
-								<span class="ordertitle">
-									2017-02-11 11:59 订单编号:7867473872181848
-									<span class="pull-right delete">
-										<img src="../images/delete.png" />
-									</span>
-								</span>
-							</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr>
-							<td width="60%">
-								<div class="typographic">
-									<img src="../images/goods.png" />
-									<a href="#" class="block-text">
-										包邮 正品玛姬儿压缩面膜无纺布纸膜100粒 送泡瓶面膜刷喷瓶 新款
-									</a>
-									<span>x1</span>
-									<a href="#" class="service">售后申请</a>
-								</div>
-							</td>
-							<td rowspan="2" width="8%" class="center">小丽</td>
-							<td rowspan="2" width="13%" class="center">
-								<ul class="unstyled">
-									<li>总金额¥138.00</li>
-									<li>在线支付</li>
-								</ul>
-							</td>
-							<td rowspan="2" width="8%" class="center">
-								<a href="#" class="btn">已完成</a>
-							</td>
-							<td rowspan="2" width="13%" class="center">
-								<ul class="unstyled">
-									<li>
-										<a href="mycomment.html" target="_blank">评价|晒单</a>
-									</li>
-								</ul>
-							</td>
-						</tr>
-						<tr>
-							<td width="50%">
-								<div class="typographic">
-									<img src="../images/goods.png" />
-									<a href="#" class="block-text">
-										包邮 正品玛姬儿压缩面膜无纺布纸膜100粒 送泡瓶面膜刷喷瓶 新款
-									</a>
-									<span>x1</span>
-									<a href="#" class="service">售后申请</a>
-								</div>
-							</td>
+							<template v-if="index === 0">
+								<td
+									:rowspan="record.orderDetailList.length || 0"
+									width="8%"
+									class="center"
+								>
+									{{ record.consignee }}
+								</td>
+								<td
+									:rowspan="record.orderDetailList.length || 0"
+									width="13%"
+									class="center"
+								>
+									<ul class="unstyled">
+										<li>总金额¥{{ record.totalAmount }}</li>
+										<li>
+											{{ record.paymentWay === 'ONLINE' ? '在线支付' : '到付' }}
+										</li>
+									</ul>
+								</td>
+								<td
+									:rowspan="record.orderDetailList.length || 0"
+									width="8%"
+									class="center"
+								>
+									<a href="#" class="btn">{{ record.orderStatusName }}</a>
+								</td>
+								<td
+									:rowspan="record.orderDetailList.length || 0"
+									width="13%"
+									class="center"
+								>
+									<ul class="unstyled">
+										<li>
+											<a href="mycomment.html" target="_blank">评价|晒单</a>
+										</li>
+									</ul>
+								</td>
+							</template>
 						</tr>
 					</tbody>
 				</table>
 			</div>
 			<div class="choose-order">
-				<div class="pagination">
-					<ul>
-						<li class="prev disabled">
-							<a href="javascript:">«上一页</a>
-						</li>
-						<li class="page actived">
-							<a href="javascript:">1</a>
-						</li>
-						<li class="page">
-							<a href="javascript:">2</a>
-						</li>
-						<li class="page">
-							<a href="javascript:">3</a>
-						</li>
-						<li class="page">
-							<a href="javascript:">4</a>
-						</li>
-
-						<li class="next disabled">
-							<a href="javascript:">下一页»</a>
-						</li>
-					</ul>
-					<div>
-						<span>&nbsp;&nbsp;&nbsp;&nbsp;共2页&nbsp;</span>
-					</div>
-				</div>
+				<!-- <Pagination
+					:currentPage="currentPage"
+					:total="totalNumber"
+					:pageSize="limit"
+					:showPageNo="continueNumber"
+					@currentChange="getMyOrderInfo"
+				/> -->
+				<el-pagination
+					background
+					layout="prev, pager, next, total"
+					:total="totalNumber"
+					:page-size="limit"
+					:hide-on-single-page="true"
+					@current-change="getMyOrderInfo"
+				/>
 			</div>
 		</div>
 		<!--猜你喜欢-->
@@ -225,8 +173,54 @@
 	</div>
 </template>
 <script>
+import { mapState } from 'vuex'
 export default {
-	name: 'MyOrder'
+	name: 'MyOrder',
+	data() {
+		return {
+			/* 当前页 */
+			currentPage: 1,
+			/* 每页显示数量 */
+			limit: 1,
+			/* 总条数 */
+			totalNumber: 0,
+			/* 连续数 */
+			continueNumber: 5
+		}
+	},
+	mounted() {
+		this.getMyOrderInfo()
+	},
+
+	computed: {
+		...mapState({
+			orderInfo: state => state.order.orderInfo || {}
+		}),
+		recordList() {
+			return this.orderInfo.records || []
+		}
+	},
+	watch: {
+		orderInfo(newValue) {
+			let { current, total } = newValue
+			this.currentPage = current
+			this.totalNumber = total
+		}
+	},
+
+	methods: {
+		async getMyOrderInfo(page = 1) {
+			let { limit } = this
+			try {
+				await this.$store.dispatch('getMyOrderInfo', {
+					page,
+					limit
+				})
+			} catch (error) {
+				console.log(error.message)
+			}
+		}
+	}
 }
 </script>
 <style lang="less" scoped>
@@ -359,49 +353,7 @@ export default {
 
 		// 分页
 		.choose-order {
-			.pagination {
-				margin: 38px 0;
-
-				ul {
-					font-size: 0;
-					display: inline-block;
-
-					li {
-						display: inline-block;
-						padding: 4px 9px;
-						font-size: 14px;
-						border: 1px solid #e0e9ee;
-
-						&.prev,
-						&.next {
-							background-color: #fafafa;
-						}
-
-						&.prev {
-							border-right-color: #28a3ef;
-						}
-
-						&.page {
-							border-color: #28a3ef;
-							border-left: 0;
-
-							&.actived {
-								background-color: #28a3ef;
-
-								a {
-									color: #fff;
-								}
-							}
-						}
-					}
-				}
-
-				div {
-					display: inline-block;
-					font-size: 14px;
-					color: #333;
-				}
-			}
+			text-align: center;
 		}
 	}
 
@@ -453,5 +405,23 @@ export default {
 			}
 		}
 	}
+}
+</style>
+
+<style lang="less">
+.el-pagination.is-background .el-pager li:not(.disabled).active {
+	background-color: #e1251b;
+	color: #fff;
+}
+
+.el-pagination.is-background .el-pager li:not(.disabled).active:hover {
+	background-color: #e1251b;
+	color: #fff;
+}
+.el-pagination.is-background .el-pager li:hover {
+	color: #e1251b;
+}
+.el-pagination.is-background .el-pager li:not(.disabled):hover {
+	color: #e1251b;
 }
 </style>

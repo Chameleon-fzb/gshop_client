@@ -74,7 +74,6 @@
 		</div>
 	</div>
 </template>
-
 <script>
 export default {
 	name: ''
@@ -84,7 +83,7 @@ export default {
 <style lang="less" scoped>
 .order-main {
 	.router-link-active {
-		color: hotpink;
+		color: #ea4a36;
 	}
 	.container {
 		margin: 0 auto;

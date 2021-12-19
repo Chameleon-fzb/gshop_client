@@ -93,8 +93,11 @@ a {
 	text-decoration: none;
 	color: #666;
 }
-a:hover {
+/* a:hover {
 	color: rgb(79, 76, 212) !important;
+} */
+a:hover {
+	color: rgb(79, 76, 212);
 }
 
 /* 重置表单元素 */

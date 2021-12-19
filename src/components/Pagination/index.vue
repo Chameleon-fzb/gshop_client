@@ -128,9 +128,10 @@ export default {
 		changeCurrentPage(page) {
 			if (page <= 0 || page > this.totalPages || page === this.myCurrentPage)
 				return
-			this.myCurrentPage = page
+			// this.myCurrentPage = page
 			/* 触发自定义事件 */
 			this.$emit('currentChange', page)
+			scrollTo(0, 0)
 		}
 	},
 	watch: {
