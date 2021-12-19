@@ -78,29 +78,62 @@ const router = new VueRouter({
 router.beforeEach(async (to, _, next) => {
 	let token = store.state.user.token
 	/** 1 没有登录*/
-	if (!token) {
-		next()
-		return
-	}
-	/** 2 登录过并进入登录界面拦截*/
-	if (to.path === '/login') {
-		next('/')
-	}
-	let hasUserInfo = !!store.state.user.userInfo
-	/** 3 已经获取了用户信息  */
-	if (hasUserInfo) {
-		next()
-	} else {
-		/** 4 没有获取用户信息  */
-		try {
-			await store.dispatch('getUserInfo')
+	// if (!token) {
+	// 	if (
+	// 		to.path.startsWith('/center') ||
+	// 		to.path.startsWith('/pay') ||
+	// 		to.path.startsWith('/trade')
+	// 	) {
+	// 		next('/login?redirect=' + to.path)
+	// 	}
+	// 	next()
+	// 	return
+	// }
+	// /** 2 登录过并进入登录界面拦截*/
+	// if (to.path === '/login') {
+	// 	next('/')
+	// }
+	// let hasUserInfo = !!store.state.user.userInfo
+	// /** 3 已经获取了用户信息  */
+	// if (hasUserInfo) {
+	// 	next()
+	// } else {
+	// 	/** 4 没有获取用户信息  */
+	// 	try {
+	// 		await store.dispatch('getUserInfo')
+	// 		next()
+	// 	} catch (error) {
+	// 		alert('用户的token过期')
+	// 		store.dispatch('resetUserInfo')
+	// 		// 去到用户之前想要去的页面
+	// 		next('/login?redirect=' + to.path)
+	// 	}
+	// }
+	if (token) {
+		let hasUserInfo = !!store.state.user.userInfo
+		/* 判断用户信息是否存在 */
+		if (hasUserInfo) {
 			next()
-		} catch (error) {
-			alert('用户的token过期')
-			store.dispatch('resetUserInfo')
-			// 去到用户之前想要去的页面
+		} else {
+			/*没有用户信息就获取用户信息 */
+			try {
+				await store.dispatch('getUserInfo')
+				next()
+			} catch (error) {
+				alert('用户token过期')
+				store.dispatch('resetUserInfo')
+				next('/login?redirect=' + to.path)
+			}
+		}
+	} else {
+		if (
+			to.path.startsWith('/center') ||
+			to.path.startsWith('/pay') ||
+			to.path.startsWith('/trade')
+		) {
 			next('/login?redirect=' + to.path)
 		}
+		next()
 	}
 })
 export default router
