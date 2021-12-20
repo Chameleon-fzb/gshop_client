@@ -8,6 +8,7 @@ import store from './store'
 import './plugins/swiper'
 import './plugins/element'
 import './plugins/VueLazyLoad'
+import './plugins/veeValidate'
 import './mock/mockServer'
 
 Vue.config.productionTip = false

@@ -16,14 +16,24 @@
 					type="text"
 					placeholder="请输入你的手机号"
 					v-model="userInfo.phone"
+					v-validate="{ required: true, regex: /^1\d{10}$/ }"
+					:class="{ invalid: errors.has('phone') }"
+					name="phone"
 				/>
-				<span class="error-msg">错误提示信息</span>
+				<span class="error-msg">{{ errors.first('phone') }}</span>
 			</div>
 			<div class="content">
 				<label>验证码:</label>
-				<input type="text" placeholder="请输入验证码" v-model="userInfo.code" />
+				<input
+					type="text"
+					placeholder="请输入验证码"
+					v-model="userInfo.code"
+					v-validate="{ required: true, regex: /^\d{6}$/ }"
+					:class="{ invalid: errors.has('code') }"
+					name="code"
+				/>
 				<button @click="getCode">获取验证码</button>
-				<span class="error-msg">错误提示信息</span>
+				<span class="error-msg">{{ errors.first('code') }}</span>
 			</div>
 			<div class="content">
 				<label>登录密码:</label>
@@ -31,18 +41,39 @@
 					type="text"
 					placeholder="请输入你的登录密码"
 					v-model="userInfo.password"
+					v-validate="{ required: true, regex: /^\w{6,16}$/ }"
+					ref="password"
+					:class="{ invalid: errors.has('password') }"
+					name="password"
 				/>
-				<span class="error-msg">错误提示信息</span>
+				<span class="error-msg">{{ errors.first('password') }}</span>
 			</div>
 			<div class="content">
 				<label>确认密码:</label>
-				<input type="text" placeholder="请输入确认密码" v-model="password2" />
-				<span class="error-msg">错误提示信息</span>
+				<input
+					type="text"
+					placeholder="请输入确认密码"
+					v-model="password2"
+					v-validate="{
+						required: true,
+						regex: /^\w{6,16}$/,
+						confirmed: 'password'
+					}"
+					:class="{ invalid: errors.has('password2') }"
+					name="password2"
+				/>
+				<span class="error-msg">{{ errors.first('password2') }}</span>
 			</div>
 			<div class="controls">
-				<input name="m1" type="checkbox" v-model="isChecked" />
+				<input
+					name="isChecked"
+					type="checkbox"
+					v-model="isChecked"
+					v-validate="{ agree: true }"
+					:class="{ invalid: errors.has('isChecked') }"
+				/>
 				<span>同意协议并注册《尚品汇用户协议》</span>
-				<span class="error-msg">错误提示信息</span>
+				<span class="error-msg">{{ errors.first('isChecked') }}</span>
 			</div>
 			<div class="btn">
 				<button @click="register">完成注册</button>
@@ -98,15 +129,8 @@ export default {
 			this.$store.dispatch('getSecurityCode', this.userInfo.phone)
 		},
 		async register() {
-			// 获取用户信息
-			const {
-				userInfo: { phone, password, code },
-				password2,
-				isChecked
-			} = this
-			// 发请求注册
-			if (!(phone && password && code && password2 && isChecked)) return
-			if (password != password2) return
+			const success = await this.$validator.validateAll()
+			if (!success) return
 			try {
 				await this.$store.dispatch('userRegister', this.userInfo)
 				alert('注册成功')

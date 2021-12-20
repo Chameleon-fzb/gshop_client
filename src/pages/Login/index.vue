@@ -21,16 +21,27 @@
 									type="text"
 									placeholder="邮箱/用户名/手机号"
 									v-model="userInfo.phone"
+									v-validate="{ required: true, regex: /^1\d{10}$/ }"
+									:class="{ invalid: errors.has('phone') }"
+									name="phone"
 								/>
 							</div>
+							<p class="error-msg">{{ errors.first('phone') }}</p>
 							<div class="input-text clearFix">
 								<span class="pwd"></span>
 								<input
 									type="text"
 									placeholder="请输入密码"
 									v-model="userInfo.password"
+									v-validate="{
+										required: true,
+										regex: /^\w{6,16}$/
+									}"
+									:class="{ invalid: errors.has('password') }"
+									name="password"
 								/>
 							</div>
+							<p class="error-msg">{{ errors.first('password') }}</p>
 							<div class="setting clearFix">
 								<label class="checkbox inline">
 									<input name="m1" type="checkbox" value="2" checked="" />
@@ -89,6 +100,8 @@ export default {
 	},
 	methods: {
 		async login() {
+			const success = await this.$validator.validateAll()
+			if (!success) return
 			try {
 				await this.$store.dispatch('userLogin', this.userInfo)
 				alert('登录成功')
@@ -164,10 +177,16 @@ export default {
 					margin: 15px 0 18px 0;
 					font-size: 12px;
 					line-height: 18px;
+					.error-msg {
+						text-align: left;
+						color: red;
+						height: 16px;
+						line-height: 16px;
+						margin-bottom: 10px;
+						padding-left: 40px;
+					}
 
 					.input-text {
-						margin-bottom: 16px;
-
 						span {
 							float: left;
 							width: 37px;
