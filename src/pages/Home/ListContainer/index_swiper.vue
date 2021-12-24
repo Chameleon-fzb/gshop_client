@@ -10,7 +10,7 @@
 							v-for="banner in bannerList"
 							:key="banner.id"
 						>
-							<img :src="banner.imageUrl" />
+							<img v-lazy="banner.imageUrl" />
 						</div>
 					</div>
 					<!-- 如果需要分页器 -->

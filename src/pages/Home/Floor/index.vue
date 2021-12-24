@@ -21,7 +21,7 @@
 										{{ item }}
 									</li>
 								</ul>
-								<img :src="floor.imgUrl" />
+								<img v-lazy="floor.imgUrl" />
 							</div>
 							<div class="floorBanner">
 								<swiper :options="swiperOptions">
@@ -30,7 +30,7 @@
 										v-for="item in floor.carouselList"
 										:key="item.id"
 									>
-										<img :src="item.imageUrl" />
+										<img v-lazy="item.imageUrl" />
 									</swiper-slide>
 									<div class="swiper-pagination" slot="pagination"></div>
 									<div class="swiper-button-prev" slot="button-prev"></div>
@@ -40,22 +40,22 @@
 							<div class="split">
 								<span class="floor-x-line"></span>
 								<div class="floor-conver-pit">
-									<img :src="floor.recommendList[1]" />
+									<img v-lazy="floor.recommendList[1]" />
 								</div>
 								<div class="floor-conver-pit">
-									<img :src="floor.recommendList[0]" />
+									<img v-lazy="floor.recommendList[0]" />
 								</div>
 							</div>
 							<div class="split center">
-								<img :src="floor.bigImg" />
+								<img v-lazy="floor.bigImg" />
 							</div>
 							<div class="split">
 								<span class="floor-x-line"></span>
 								<div class="floor-conver-pit">
-									<img :src="floor.recommendList[3]" />
+									<img v-lazy="floor.recommendList[3]" />
 								</div>
 								<div class="floor-conver-pit">
-									<img :src="floor.recommendList[2]" />
+									<img v-lazy="floor.recommendList[2]" />
 								</div>
 							</div>
 						</div>

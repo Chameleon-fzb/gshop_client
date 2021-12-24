@@ -26,7 +26,7 @@
 					>
 						<p class="tab-pic">
 							<a href="#">
-								<img :src="item.imageUrl" />
+								<img v-lazy="item.imageUrl" />
 							</a>
 						</p>
 						<div class="tab-info">

@@ -10,7 +10,7 @@
 						</div>
 					</li>
 					<li class="banner" v-for="item in recommends" :key="item.id">
-						<img :src="item.imageUrl" />
+						<img v-lazy="item.imageUrl" />
 					</li>
 				</ul>
 			</div>

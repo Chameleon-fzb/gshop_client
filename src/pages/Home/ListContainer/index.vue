@@ -10,7 +10,7 @@
 						v-for="banner in bannerList"
 						:key="banner.id"
 					>
-						<img :src="banner.imageUrl" />
+						<img v-lazy="banner.imageUrl" />
 					</swiper-slide>
 					<div class="swiper-pagination" slot="pagination"></div>
 					<div class="swiper-button-prev" slot="button-prev"></div>

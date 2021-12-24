@@ -40,7 +40,7 @@
 							<td width="60%">
 								<div class="typographic">
 									<img
-										:src="orderGoodsItem.imgUrl"
+										v-lazy="orderGoodsItem.imgUrl"
 										width="80px"
 										height="80px"
 									/>

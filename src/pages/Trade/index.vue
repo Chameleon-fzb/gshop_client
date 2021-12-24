@@ -43,7 +43,7 @@
 					:key="goodItem.id"
 				>
 					<li>
-						<img :src="goodItem.imgUrl" alt="" width="80px" />
+						<img v-lazy="goodItem.imgUrl" alt="" width="80px" />
 					</li>
 					<li>
 						<p>

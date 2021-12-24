@@ -25,7 +25,7 @@
 						/>
 					</li>
 					<li class="cart-list-con2">
-						<img :src="cartItem.imgUrl" />
+						<img v-lazy="cartItem.imgUrl" />
 						<div class="item-msg">
 							{{ cartItem.skuName.substring(0, 62) + '...' }}
 						</div>
