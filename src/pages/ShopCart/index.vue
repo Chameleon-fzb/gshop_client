@@ -11,18 +11,9 @@
 				<div class="cart-th6">操作</div>
 			</div>
 			<div class="cart-body">
-				<ul
-					class="cart-list"
-					v-for="cartItem in cartInfoList"
-					:key="cartItem.id"
-				>
+				<ul class="cart-list" v-for="cartItem in cartInfoList" :key="cartItem.id">
 					<li class="cart-list-con1">
-						<input
-							type="checkbox"
-							name="chk_list"
-							:checked="cartItem.isChecked"
-							@click="changeIsChecked(cartItem)"
-						/>
+						<input type="checkbox" name="chk_list" :checked="cartItem.isChecked" @click="changeIsChecked(cartItem)" />
 					</li>
 					<li class="cart-list-con2">
 						<img v-lazy="cartItem.imgUrl" />
@@ -34,28 +25,13 @@
 						<span class="price">{{ cartItem.skuPrice }}</span>
 					</li>
 					<li class="cart-list-con5">
-						<a
-							href="javascript:;"
-							class="mins"
-							@click="changeCartNum($event, cartItem, -1, true)"
-						>
+						<a href="javascript:;" class="mins" @click="changeCartNum($event, cartItem, -1, true)">
 							-
 						</a>
-						<input
-							autocomplete="off"
-							type="text"
-							:value="cartItem.skuNum"
-							minnum="1"
-							class="itxt"
-							@change="
-								changeCartNum($event, cartItem, $event.target.value * 1, false)
-							"
-						/>
-						<a
-							href="javascript:;"
-							class="plus"
-							@click="changeCartNum($event, cartItem, 1, true)"
-						>
+						<input autocomplete="off" type="text" :value="cartItem.skuNum" minnum="1" class="itxt" @change="
+							changeCartNum($event, cartItem, $event.target.value * 1, false)
+						" />
+						<a href="javascript:;" class="plus" @click="changeCartNum($event, cartItem, 1, true)">
 							+
 						</a>
 					</li>
@@ -65,11 +41,7 @@
 						</span>
 					</li>
 					<li class="cart-list-con7">
-						<a
-							href="javascript:;"
-							class="sindelet"
-							@click="deleteCart(cartItem.skuId)"
-						>
+						<a href="javascript:;" class="sindelet" @click="deleteCart(cartItem.skuId)">
 							删除
 						</a>
 						<br />
@@ -80,12 +52,7 @@
 		</div>
 		<div class="cart-tool">
 			<div class="select-all">
-				<input
-					class="chooseAll"
-					type="checkbox"
-					v-model="isAllChecked"
-					:disabled="cartInfoList.length <= 0"
-				/>
+				<input class="chooseAll" type="checkbox" v-model="isAllChecked" :disabled="cartInfoList.length <= 0" />
 				<!-- @click="changeIsAllCheck" -->
 				<span>全选</span>
 			</div>
@@ -173,7 +140,6 @@ export default {
 				// this.cartInfoList.forEach(item => {
 				// 	item.skuId === skuId && (item.isChecked = item.isChecked ? 0 : 1)
 				// })
-				console.log('chufala')
 				this.getCartList()
 			} catch (error) {
 				alert(error.message)
@@ -243,7 +209,7 @@ export default {
 			padding: 10px;
 			overflow: hidden;
 
-			& > div {
+			&>div {
 				float: left;
 			}
 
@@ -280,14 +246,15 @@ export default {
 				border-bottom: 1px solid #ddd;
 				overflow: hidden;
 
-				& > li {
+				&>li {
 					float: left;
 				}
 
 				.cart-list-con1 {
 					line-height: 82px;
 					width: 10%;
-					& > input {
+
+					&>input {
 						caret-color: transparent;
 					}
 				}
@@ -346,6 +313,7 @@ export default {
 						text-align: center;
 						padding: 8px 0;
 					}
+
 					.mins:hover,
 					.plus:hover {
 						background: #ddd;
@@ -355,6 +323,7 @@ export default {
 				.cart-list-con6 {
 					width: 12%;
 					line-height: 82px;
+
 					.sum {
 						font-size: 16px;
 					}
@@ -363,6 +332,7 @@ export default {
 				.cart-list-con7 {
 					width: 13%;
 					line-height: 41px;
+
 					a {
 						color: #666;
 					}
@@ -375,7 +345,8 @@ export default {
 		overflow: hidden;
 		border: 1px solid #ddd;
 		margin-bottom: 10px;
-		& > * {
+
+		&>* {
 			line-height: 32px;
 		}
 
@@ -408,6 +379,7 @@ export default {
 
 		.money-box {
 			float: right;
+
 			.chosed {
 				float: left;
 				padding: 0 10px;
@@ -420,9 +392,11 @@ export default {
 				height: 50px;
 				line-height: 50px;
 				padding: 0 10px;
+
 				em {
 					font-size: 14px;
 				}
+
 				.summoney {
 					color: #c81623;
 					font-size: 15px;

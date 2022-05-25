@@ -23,11 +23,7 @@
 							{{ searchParams.trademark }}
 							<i @click="removeTrademark">×</i>
 						</li>
-						<li
-							class="with-x"
-							v-for="(prop, index) in searchParams.props"
-							:key="prop"
-						>
+						<li class="with-x" v-for="(prop, index) in searchParams.props" :key="prop">
 							{{ prop }}
 							<i @click="removeProp(index)">×</i>
 						</li>
@@ -43,51 +39,36 @@
 								<li :class="{ active: orders[0] === '1' }">
 									<a href="javascript:" @click="setOrder('1')">
 										综合
-										<i
-											v-if="orders[0] === '1'"
-											class="iconfont"
-											:class="orders[1] === 'desc' ? 'icon-down' : 'icon-up'"
-										></i>
+										<i v-if="orders[0] === '1'" class="iconfont"
+											:class="orders[1] === 'desc' ? 'icon-down' : 'icon-up'"></i>
 									</a>
 								</li>
 								<li :class="{ active: orders[0] === '3' }">
 									<a href="javascript:" @click="setOrder('3')">
 										销量
-										<i
-											v-if="orders[0] === '3'"
-											class="iconfont"
-											:class="orders[1] === 'desc' ? 'icon-down' : 'icon-up'"
-										></i>
+										<i v-if="orders[0] === '3'" class="iconfont"
+											:class="orders[1] === 'desc' ? 'icon-down' : 'icon-up'"></i>
 									</a>
 								</li>
 								<li :class="{ active: orders[0] === '5' }">
 									<a href="javascript:" @click="setOrder('5')">
 										新品
-										<i
-											v-if="orders[0] === '5'"
-											class="iconfont"
-											:class="orders[1] === 'desc' ? 'icon-down' : 'icon-up'"
-										></i>
+										<i v-if="orders[0] === '5'" class="iconfont"
+											:class="orders[1] === 'desc' ? 'icon-down' : 'icon-up'"></i>
 									</a>
 								</li>
 								<li :class="{ active: orders[0] === '4' }">
 									<a href="javascript:" @click="setOrder('4')">
 										评价
-										<i
-											v-if="orders[0] === '4'"
-											class="iconfont"
-											:class="orders[1] === 'desc' ? 'icon-down' : 'icon-up'"
-										></i>
+										<i v-if="orders[0] === '4'" class="iconfont"
+											:class="orders[1] === 'desc' ? 'icon-down' : 'icon-up'"></i>
 									</a>
 								</li>
 								<li :class="{ active: orders[0] === '2' }">
 									<a href="javascript:" @click="setOrder('2')">
 										价格
-										<i
-											v-if="orders[0] === '2'"
-											class="iconfont"
-											:class="orders[1] === 'desc' ? 'icon-down' : 'icon-up'"
-										></i>
+										<i v-if="orders[0] === '2'" class="iconfont"
+											:class="orders[1] === 'desc' ? 'icon-down' : 'icon-up'"></i>
 									</a>
 								</li>
 							</ul>
@@ -121,11 +102,7 @@
 										</i>
 									</div>
 									<div class="operate">
-										<a
-											href="success-cart.html"
-											target="_blank"
-											class="sui-btn btn-bordered btn-danger"
-										>
+										<a href="success-cart.html" target="_blank" class="sui-btn btn-bordered btn-danger">
 											加入购物车
 										</a>
 										<a href="javascript:void(0);" class="sui-btn btn-bordered">
@@ -136,13 +113,8 @@
 							</li>
 						</ul>
 					</div>
-					<Pagination
-						:currentPage="searchParams.pageNo"
-						:total="total"
-						:pageSize="searchParams.pageSize"
-						:showPageNo="3"
-						@currentChange="getShopList"
-					/>
+					<Pagination :currentPage="searchParams.pageNo" :total="total" :pageSize="searchParams.pageSize"
+						:showPageNo="3" @currentChange="getShopList" />
 				</div>
 				<!--hotsale-->
 				<div class="clearfix hot-sale">
@@ -251,7 +223,7 @@ export default {
 				categoryName: '', // 分类名称
 				keyword: '', // 搜索关键字
 				props: [], // ["属性ID:属性值:属性名"]示例: ["2:6.0～6.24英寸:屏幕尺寸"]
-				// trademark: '', // 品牌: "ID:品牌名称"示例: "1:苹果"
+				trademark: '', // 品牌: "ID:品牌名称"示例: "1:苹果"
 				order: '1:desc', // 排序方式 1: 综合,2: 价格 asc: 升序,desc: 降序 示例: "1:desc"
 				pageNo: 1, // 页码
 				pageSize: 5 // 每页数量
@@ -380,30 +352,37 @@ export default {
 <style lang="less" scoped>
 .main {
 	margin: 10px 0;
+
 	.py-container {
 		width: 1200px;
 		margin: 0 auto;
+
 		.bread {
 			margin-bottom: 5px;
 			overflow: hidden;
+
 			.sui-breadcrumb {
 				padding: 3px 15px;
 				margin: 0;
 				font-weight: 400;
 				border-radius: 3px;
 				float: left;
+
 				li {
 					display: inline-block;
 					line-height: 18px;
+
 					a {
 						color: #666;
 						text-decoration: none;
+
 						&:hover {
 							color: #4cb9fc;
 						}
 					}
 				}
 			}
+
 			.sui-tag {
 				margin-top: -5px;
 				list-style: none;
@@ -412,6 +391,7 @@ export default {
 				padding: 5px 0 0;
 				margin-bottom: 18px;
 				float: left;
+
 				.with-x {
 					font-size: 12px;
 					margin: 0 5px 5px 0;
@@ -426,6 +406,7 @@ export default {
 					white-space: nowrap;
 					transition: color 400ms;
 					cursor: pointer;
+
 					i {
 						margin-left: 10px;
 						cursor: pointer;
@@ -435,17 +416,21 @@ export default {
 						line-height: 100%;
 						vertical-align: middle;
 					}
+
 					&:hover {
 						color: #28a3ef;
 					}
 				}
 			}
 		}
+
 		.details {
 			margin-bottom: 5px;
+
 			.sui-navbar {
 				overflow: visible;
 				margin-bottom: 0;
+
 				.filter {
 					min-height: 40px;
 					padding-right: 20px;
@@ -454,25 +439,30 @@ export default {
 					padding-left: 0;
 					border-radius: 0;
 					box-shadow: 0 1px 4px rgba(0, 0, 0, 0.065);
+
 					.sui-nav {
 						position: relative;
 						left: 0;
 						display: block;
 						float: left;
 						margin: 0 10px 0 0;
+
 						li {
 							float: left;
+
 							a {
 								display: block;
 								cursor: pointer;
 								padding: 11px 15px;
 								color: #777;
 								text-decoration: none;
+
 								.iconfont.icon-up,
 								.iconfont.icon-down {
 									font-size: 6px;
 								}
 							}
+
 							&.active {
 								a {
 									background: #e1251b;
@@ -483,23 +473,29 @@ export default {
 					}
 				}
 			}
+
 			.goods-list {
 				margin: 20px 0;
+
 				ul {
 					display: flex;
 					flex-wrap: wrap;
+
 					li {
 						height: 100%;
 						width: 20%;
 						margin-top: 10px;
 						line-height: 28px;
+
 						.list-wrap {
 							.p-img {
 								padding-left: 15px;
 								width: 215px;
 								height: 255px;
+
 								a {
 									color: #666;
+
 									img {
 										max-width: 100%;
 										height: auto;
@@ -507,17 +503,21 @@ export default {
 									}
 								}
 							}
+
 							.price {
 								padding-left: 15px;
 								font-size: 18px;
 								color: #c81623;
+
 								strong {
 									font-weight: 700;
+
 									i {
 										margin-left: -5px;
 									}
 								}
 							}
+
 							.attr {
 								padding-left: 15px;
 								width: 85%;
@@ -529,23 +529,28 @@ export default {
 								display: -webkit-box;
 								-webkit-box-orient: vertical;
 								-webkit-line-clamp: 2;
+
 								a {
 									color: #333;
 									text-decoration: none;
 								}
 							}
+
 							.commit {
 								padding-left: 15px;
 								height: 22px;
 								font-size: 13px;
 								color: #a7a7a7;
+
 								span {
 									font-weight: 700;
 									color: #646fb0;
 								}
 							}
+
 							.operate {
 								padding: 12px 15px;
+
 								.sui-btn {
 									display: inline-block;
 									padding: 2px 14px;
@@ -560,11 +565,13 @@ export default {
 									background-color: transparent;
 									margin-right: 15px;
 								}
+
 								.btn-bordered {
 									min-width: 85px;
 									background-color: transparent;
 									border: 1px solid #8c8c8c;
 									color: #8c8c8c;
+
 									&:hover {
 										border: 1px solid #666;
 										color: #fff !important;
@@ -572,9 +579,11 @@ export default {
 										text-decoration: none;
 									}
 								}
+
 								.btn-danger {
 									border: 1px solid #e1251b;
 									color: #e1251b;
+
 									&:hover {
 										border: 1px solid #e1251b;
 										background-color: #e1251b;
@@ -588,9 +597,11 @@ export default {
 				}
 			}
 		}
+
 		.hot-sale {
 			margin-bottom: 5px;
 			border: 1px solid #ddd;
+
 			.title {
 				font-weight: 700;
 				font-size: 14px;
@@ -601,20 +612,26 @@ export default {
 				margin: 0;
 				padding: 5px 0 5px 15px;
 			}
+
 			.hot-list {
 				padding: 15px;
+
 				ul {
 					display: flex;
+
 					li {
 						width: 25%;
 						height: 100%;
+
 						.list-wrap {
+
 							.p-img,
 							.price,
 							.attr,
 							.commit {
 								padding-left: 15px;
 							}
+
 							.p-img {
 								img {
 									max-width: 100%;
@@ -622,6 +639,7 @@ export default {
 									border: 0;
 								}
 							}
+
 							.attr {
 								width: 85%;
 								display: -webkit-box;
@@ -633,16 +651,20 @@ export default {
 								cursor: pointer;
 								line-height: 1.8;
 							}
+
 							.price {
 								font-size: 18px;
 								color: #c81623;
+
 								strong {
 									font-weight: 700;
+
 									i {
 										margin-left: -5px;
 									}
 								}
 							}
+
 							.commit {
 								height: 22px;
 								font-size: 13px;

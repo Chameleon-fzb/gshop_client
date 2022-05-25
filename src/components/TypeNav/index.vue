@@ -201,11 +201,9 @@ export default {
 			top: 45px;
 			width: 210px;
 			height: 461px;
-			position: absolute;
 			background: #fafafa;
-			z-index: 999;
-			//*指定 过渡 的样式
-			&.slide-enter-active,
+			z-index: 1000;
+			*指定 过渡 的样式 &.slide-enter-active,
 			&.slide-leave-active {
 				transition: all 0.3s;
 			}
@@ -216,6 +214,8 @@ export default {
 				height: 0;
 			}
 			.all-sort-list2 {
+				// width: 210px;
+				// height: 461px;
 				.item {
 					h3 {
 						line-height: 30px;

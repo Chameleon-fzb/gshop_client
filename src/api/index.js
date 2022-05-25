@@ -89,7 +89,7 @@ export const reqSecurityCode = phone =>
 		url: `/user/passport/sendCode/${phone}`,
 		method: 'GET'
 	})
-/**注册 */
+/**登录 */
 export const reqLogin = userInfo =>
 	ajax({
 		url: '/user/passport/login',

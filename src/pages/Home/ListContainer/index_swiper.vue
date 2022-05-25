@@ -5,11 +5,7 @@
 				<!--banner轮播-->
 				<div class="swiper-container" ref="mySwiper">
 					<div class="swiper-wrapper">
-						<div
-							class="swiper-slide"
-							v-for="banner in bannerList"
-							:key="banner.id"
-						>
+						<div class="swiper-slide" v-for="banner in bannerList" :key="banner.id">
 							<img v-lazy="banner.imageUrl" />
 						</div>
 					</div>
@@ -113,7 +109,7 @@ import Swiper from 'swiper'
 import 'swiper/css/swiper.css'
 import { mapState } from 'vuex'
 export default {
-	name: 'ListCommtainer',
+	name: 'ListContainer',
 	computed: {
 		...mapState({
 			bannerList: state => state.home.bannerList
@@ -123,7 +119,7 @@ export default {
 	watch: {
 		/**
 		 * * 在列表数据已经有了,  且已经更新显示了?
-		 * * 数据变化后 ==> 同步调佣监视的回调 ==> 最后异步更新界面
+		 * * 数据变化后 ==> 同步调监视的回调 ==> 最后异步更新界面
 		 * * watch : 监视 bannerList, 就可以知道 有数据了
 		 * * nextTick: 界面更新后执行回调
 		 */

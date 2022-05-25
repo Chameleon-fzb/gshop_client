@@ -5,12 +5,8 @@
 				<!--banner轮播-->
 				<!-- 使用 vue-awesome-swiper 组件 -->
 				<swiper :options="swiperOptions">
-					<swiper-slide
-						class="swiper-slide"
-						v-for="banner in bannerList"
-						:key="banner.id"
-					>
-						<img v-lazy="banner.imageUrl" />
+					<swiper-slide class="swiper-slide" v-for="banner in bannerList" :key="banner.id">
+						<img :src="banner.imageUrl" />
 					</swiper-slide>
 					<div class="swiper-pagination" slot="pagination"></div>
 					<div class="swiper-button-prev" slot="button-prev"></div>
@@ -107,7 +103,7 @@
 <script>
 import { mapState } from 'vuex'
 export default {
-	name: 'ListCommtainer',
+	name: 'ListContainer',
 	data() {
 		return {
 			swiperOptions: {
